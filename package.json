@@ -1,0 +1,15 @@
+{
+  "name": "@fabnumdef/e-chauffeur_lib-vue",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabnumdef/e-chauffeur_lib-vue.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fabnumdef/e-chauffeur_lib-vue/issues"
+  },
+  "homepage": "https://github.com/fabnumdef/e-chauffeur_lib-vue#readme",
+  "dependencies": {
+    "@fabnumdef/design-system": "github:fabnumdef/design-system"
+  }
+}
