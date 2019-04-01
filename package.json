@@ -1,6 +1,14 @@
 {
   "name": "@fabnumdef/e-chauffeur_lib-vue",
   "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "lint": "vue-cli-service lint -- src tests config",
+    "storybook:build": "vue-cli-service storybook:build -c config/storybook",
+    "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
+    "storybook:deploy": "storybook-to-ghpages -o gh-pages",
+    "test": "vue-cli-service test:unit"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fabnumdef/e-chauffeur_lib-vue.git"
@@ -11,5 +19,36 @@
   "homepage": "https://github.com/fabnumdef/e-chauffeur_lib-vue#readme",
   "dependencies": {
     "@fabnumdef/design-system": "github:fabnumdef/design-system"
-  }
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^5.0.0",
+    "@storybook/addon-knobs": "^5.0.0",
+    "@storybook/addon-links": "^5.0.0",
+    "@storybook/addon-notes": "^5.0.0",
+    "@storybook/storybook-deployer": "^2.8.1",
+    "@vue/cli-plugin-babel": "^3.5.0",
+    "@vue/cli-plugin-eslint": "^3.5.0",
+    "@vue/cli-plugin-unit-mocha": "^3.5.0",
+    "@vue/cli-service": "^3.5.0",
+    "@vue/eslint-config-airbnb": "^4.0.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.1.2",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.1.0",
+    "vue-cli-plugin-storybook": "^0.6.1",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
