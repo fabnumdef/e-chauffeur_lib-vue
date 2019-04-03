@@ -6,7 +6,7 @@
     "lint": "vue-cli-service lint -- src tests config",
     "storybook:build": "vue-cli-service storybook:build -c config/storybook",
     "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
-    "storybook:deploy": "storybook-to-ghpages -o gh-pages",
+    "storybook:deploy": "vue-cli-service storybook:build -c config/storybook -o gh-pages && storybook-to-ghpages --existing-output-dir=gh-pages",
     "test": "vue-cli-service test:unit"
   },
   "repository": {
