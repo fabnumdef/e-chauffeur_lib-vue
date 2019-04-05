@@ -16,6 +16,9 @@ module.exports = function injectModule({ components = {} } = {}) {
   this.addPlugin({
     src: join(__dirname, 'plugins/axios.js'),
   });
+  this.addPlugin({
+    src: join(__dirname, 'plugins/luxon.js'),
+  });
 };
 
 module.exports.meta = require('./package.json');

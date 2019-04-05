@@ -22,6 +22,7 @@
     "@nuxtjs/axios": "^5.4.1",
     "@nuxtjs/pwa": "^3.0.0-beta.14",
     "@nuxtjs/toast": "^3.0.2",
+    "luxon": "^1.12.0",
     "qs": "^6.7.0"
   },
   "devDependencies": {
@@ -44,6 +45,9 @@
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-storybook": "^0.6.1",
     "vue-template-compiler": "^2.5.21"
+  },
+  "peerDependencies": {
+    "vue": "2.x"
   },
   "postcss": {
     "plugins": {
