@@ -7,7 +7,7 @@ module.exports = function injectModule({ components = {} } = {}) {
   this.requireModule('@nuxtjs/toast');
 
   this.addPlugin({
-    src: join(__dirname, 'plugin.js'),
+    src: join(__dirname, 'plugins/components.js'),
     options: {
       components,
       pkg,
