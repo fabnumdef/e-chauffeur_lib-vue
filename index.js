@@ -19,6 +19,10 @@ module.exports = function injectModule({ components = {}, api = [] } = {}) {
   });
 
   this.addPlugin({
+    src: join(__dirname, 'plugins/states.js'),
+  });
+
+  this.addPlugin({
     src: join(__dirname, 'api/index.js'),
     options: {
       api,
