@@ -30,6 +30,8 @@ module.exports = function injectModule({ components = {}, api = [] } = {}) {
     },
   });
 
+  this.requireModule(['qonfucius-nuxt-bulma', { css: false, postcss: false }]);
+  this.requireModule('qonfucius-nuxt-fontawesome');
   this.requireModule('@nuxtjs/pwa');
   this.requireModule('@nuxtjs/toast');
   this.requireModule('@nuxtjs/axios');
