@@ -1,5 +1,7 @@
 import Vue from 'vue';
-import StateMachine from '../api/status';
+// eslint-disable-next-line import/no-unresolved,import/extensions
+import StateMachine from '<%=options.pkg.name%>/api/status';
+
 
 export default () => {
   Vue.mixin({

@@ -1,7 +1,7 @@
 const { join } = require('path');
 const pkg = require('./package.json');
 
-module.exports = function injectModule({ components = {}, api = [] } = {}) {
+module.exports = function injectModule({ components = {}, api = [], withAuth = false } = {}) {
   this.addPlugin({
     src: join(__dirname, 'plugins/components.js'),
     options: {
@@ -18,8 +18,20 @@ module.exports = function injectModule({ components = {}, api = [] } = {}) {
     src: join(__dirname, 'plugins/luxon.js'),
   });
 
+  if (withAuth) {
+    this.addPlugin({
+      src: join(__dirname, 'plugins/has-right.js'),
+      options: {
+        pkg,
+      },
+    });
+  }
+
   this.addPlugin({
     src: join(__dirname, 'plugins/states.js'),
+    options: {
+      pkg,
+    },
   });
 
   this.addPlugin({
@@ -33,6 +45,10 @@ module.exports = function injectModule({ components = {}, api = [] } = {}) {
       pkg,
     },
   });
+
+  if (withAuth) {
+    this.requireModule('@nuxtjs/auth');
+  }
 
   this.requireModule(['qonfucius-nuxt-bulma', { css: false, postcss: false }]);
   this.requireModule('qonfucius-nuxt-fontawesome');
