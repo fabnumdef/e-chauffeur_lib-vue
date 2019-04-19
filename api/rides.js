@@ -68,6 +68,18 @@ export default axios => (campus, mask) => {
       return response;
     },
 
+    async getRide(id, token) {
+      return axios.get(
+        `/${ENTITY_PLURAL}/${id}`,
+        {
+          params: {
+            mask,
+            token,
+          },
+        },
+      );
+    },
+
     async postRide(data) {
       return axios.post(
         `/${ENTITY_PLURAL}`,
@@ -176,6 +188,22 @@ export default axios => (campus, mask) => {
           },
         },
       );
+    },
+
+    async getDriverPosition(id, token) {
+      try {
+        return await axios.get(
+          `/${ENTITY_PLURAL}/${id}/position`,
+          {
+            params: {
+              mask: 'driver,date,position',
+              token,
+            },
+          },
+        );
+      } catch (e) {
+        return {};
+      }
     },
   };
 };
