@@ -1,0 +1,15 @@
+export const CREATED = 'created';
+export const VALIDATED = 'validated'; // Regulation validation
+export const REJECTED_BOUNDARY = 'rejected_boundary'; // Regulation validation
+export const REJECTED_CAPACITY = 'rejected_capacity'; // Regulation validation
+export const ACCEPTED = 'accepted'; // Driver acceptance
+export const DECLINED = 'declined'; // Driver rejection
+export const STARTED = 'started';
+export const WAITING = 'waiting';
+export const IN_PROGRESS = 'progress';
+export const DELIVERED = 'delivered';
+export const CANCELED = 'canceled';
+export const CANCELED_TECHNICAL = 'canceled_technical';
+export const CANCELED_REQUESTED_CUSTOMER = 'canceled_requested_customer';
+export const CANCELED_CUSTOMER_OVERLOAD = 'canceled_customer_overload';
+export const CANCELED_CUSTOMER_MISSING = 'canceled_customer_missing';

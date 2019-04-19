@@ -1,11 +1,12 @@
 import merge from 'lodash.merge';
+import { Interval, DateTime } from 'luxon';
 import { computePagination } from './helpers';
 import { ENTITY_PLURAL as CAMPUS_PLURAL } from './campuses';
 
 export const ENTITY_PLURAL = 'rides';
 export const ENTITY = 'ride';
 
-export default axios => (campus, user, mask) => {
+export default axios => (campus, mask) => {
   const filters = {};
   if (campus) {
     filters.campus = campus;
@@ -15,7 +16,7 @@ export default axios => (campus, user, mask) => {
     filters,
   };
   return {
-    async getDriverRides(...status) {
+    async getDriverRides(user, ...status) {
       const response = await axios.get(
         `/${CAMPUS_PLURAL}/${campus}/drivers/${user}/rides`,
         {
@@ -34,12 +35,145 @@ export default axios => (campus, user, mask) => {
       return response;
     },
 
-    async mutateRide(id, action) {
+    async mutateRide({ id }, action) {
       return axios.post(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}/${action}`,
         {},
         {
           params,
+        },
+      );
+    },
+
+    async getRides(start, end, { format = null, count = 10 } = {}) {
+      const headers = {
+        Range: `${ENTITY}=-${count}`,
+      };
+      if (format) {
+        headers.Accept = format;
+      }
+      const response = await axios.get(
+        `/${ENTITY_PLURAL}`,
+        {
+          params: {
+            mask,
+            filters: merge({}, filters, { start, end }),
+          },
+          headers,
+        },
+      );
+
+      response.pagination = computePagination(response)[ENTITY];
+
+      return response;
+    },
+
+    async postRide(data) {
+      return axios.post(
+        `/${ENTITY_PLURAL}`,
+        merge(data, { campus: { id: campus } }),
+        {
+          params,
+        },
+      );
+    },
+
+    async patchRide(id, data) {
+      return axios.patch(
+        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
+        data,
+        {
+          params,
+        },
+      );
+    },
+
+    async getAvailableDrivers(userMask, start, end) {
+      const response = await axios.get(
+        `/${CAMPUS_PLURAL}/${campus}/drivers`,
+        {
+          params: {
+            mask: userMask,
+            filters: {
+              start,
+              end,
+            },
+          },
+        },
+      );
+      response.data = response.data.map((u) => {
+        const user = u;
+        if (u.availabilities) {
+          user.availabilities = u.availabilities
+            .filter(r => r.s && r.e)
+            .map(a => Interval.fromDateTimes(DateTime.fromISO(a.s), DateTime.fromISO(a.e)));
+        }
+        return user;
+      });
+      return response;
+    },
+
+    async getDriversPositions(userMask) {
+      const response = await axios.get(
+        `/${CAMPUS_PLURAL}/${campus}/drivers-positions`,
+        {
+          params: {
+            mask: userMask,
+          },
+        },
+      );
+      response.data = response.data.map((u) => {
+        const user = u;
+        if (u.availabilities) {
+          user.availabilities = u.availabilities
+            .filter(r => r.s && r.e)
+            .map(a => Interval.fromDateTimes(DateTime.fromISO(a.s), DateTime.fromISO(a.e)));
+        }
+        return user;
+      });
+      return response;
+    },
+
+    async getAvailableCars(carMask, start, end, sort) {
+      const parameters = {
+        mask: carMask,
+        filters: {
+          start,
+          end,
+        },
+      };
+      if (sort) {
+        parameters.sort = sort;
+      }
+      const response = await axios.get(
+        `/${CAMPUS_PLURAL}/${campus}/cars`,
+        {
+          params: parameters,
+        },
+      );
+      response.data = response.data.map((c) => {
+        const car = c;
+        if (c.availabilities) {
+          car.availabilities = c.availabilities
+            .filter(r => r.s && r.e)
+            .map(a => Interval.fromDateTimes(DateTime.fromISO(a.s), DateTime.fromISO(a.e)));
+        }
+        return car;
+      });
+      return response;
+    },
+
+    async getStats(queriedStats, start, end) {
+      return axios.get(
+        `/${CAMPUS_PLURAL}/${campus}/stats`,
+        {
+          params: {
+            mask: queriedStats,
+            filters: {
+              start,
+              end,
+            },
+          },
         },
       );
     },

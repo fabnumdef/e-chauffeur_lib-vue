@@ -1,15 +1,18 @@
 import { computePagination } from './helpers';
 
-
-export const ENTITY = 'campus';
-export const ENTITY_PLURAL = 'campuses';
+const ENTITY = 'car-model';
+const ENTITY_PLURAL = 'car-models';
 
 export default axios => ({
-  async getCampuses(mask, { search = null } = {}) {
+  async getCarModels(mask, { search = null } = {}) {
+    const params = { mask };
+    if (search) {
+      params.search = search;
+    }
     const response = await axios.get(
       `/${ENTITY_PLURAL}`,
       {
-        params: { mask, search },
+        params,
         headers: {
           Range: `${ENTITY}=-10`,
         },
@@ -17,20 +20,20 @@ export default axios => ({
     );
 
     response.pagination = computePagination(response)[ENTITY];
+
     return response;
   },
-  async getCampus(id, mask) {
-    const response = await axios.get(
+
+  getCarModel(id, mask) {
+    return axios.get(
       `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
       {
         params: { mask },
       },
     );
-
-    response.data = Object.assign({ phone: {} }, response.data);
-    return response;
   },
-  patchCampus(id, data, mask) {
+
+  patchCarModel(id, data, mask) {
     return axios.patch(
       `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
       data,
@@ -40,7 +43,7 @@ export default axios => ({
     );
   },
 
-  postCampus(data, mask) {
+  postCarModel(data, mask) {
     return axios.post(
       `/${ENTITY_PLURAL}`,
       data,
@@ -50,7 +53,7 @@ export default axios => ({
     );
   },
 
-  deleteCampus(id) {
+  deleteCarModel(id) {
     return axios.delete(
       `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
     );

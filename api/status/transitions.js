@@ -1,0 +1,14 @@
+export const VALIDATE = 'validation';
+export const REJECT_BOUNDARY = 'rejection_boundary';
+export const REJECT_CAPACITY = 'rejection_capacity';
+export const ACCEPT = 'accept';
+export const DECLINE = 'decline';
+export const START = 'start-up';
+export const WAIT = 'stay';
+export const PROGRESS = 'progress';
+export const DELIVER = 'deliver';
+export const CANCEL = 'void';
+export const CANCEL_TECHNICAL = 'cancel_technical';
+export const CANCEL_REQUESTED_CUSTOMER = 'cancel_requested_by_customer';
+export const CANCEL_CUSTOMER_OVERLOAD = 'cancel_customer_overload';
+export const CANCEL_CUSTOMER_MISSING = 'cancel_customer_missing';
