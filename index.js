@@ -2,7 +2,9 @@ const { join } = require('path');
 const merge = require('lodash.merge');
 const pkg = require('./package.json');
 
-module.exports = function injectModule({ components = {}, api = [], plugins = [], withAuth = false } = {}) {
+module.exports = function injectModule({
+  components = {}, api = {}, plugins = [], withAuth = false,
+} = {}) {
   merge(this.options, {
     head: {
       htmlAttrs: {

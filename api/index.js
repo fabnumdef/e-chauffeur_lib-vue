@@ -1,11 +1,11 @@
-<% options.api.forEach((componentKey) => { %>
-  import <%=componentKey%> from '<%=options.pkg.name%>/api/<%=componentKey%>';
+<% Object.keys(options.api).forEach((key) => { %>
+  import <%=key%> from '<%=options.pkg.name%>/api/<%=options.api[key]%>';
 <% })%>
 
 export default function (ctx, inject) {
   const api = {
-    <% options.api.forEach((componentKey) => { %>
-      <%=componentKey%>: <%=componentKey%>(ctx.$axios),
+    <% Object.keys(options.api).forEach((key) => { %>
+      <%=key%>: <%=key%>(ctx.$axios),
     <% })%>
   };
   ctx.$api = api;
