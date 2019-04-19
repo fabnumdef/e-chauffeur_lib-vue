@@ -1,10 +1,12 @@
 const { join } = require('path');
 const merge = require('lodash.merge');
 const pkg = require('./package.json');
+const MODULE_BUILD_DIR = 'lib-eChauffeur';
 
 module.exports = function injectModule({
-  components = {}, api = {}, plugins = [], withAuth = false,
+  components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [],
 } = {}) {
+  const { buildDir } = this.options;
   merge(this.options, {
     head: {
       htmlAttrs: {
@@ -26,17 +28,36 @@ module.exports = function injectModule({
           },
         },
       },
+      plugins: authPlugins.map(plugin => join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin}.js`)),
     },
     toast: {
       position: 'bottom-right',
       duration: 15000,
     },
+    env: {
+      apiUrl: process.env.API_URL,
+    },
     manifest: {
       lang: 'fr',
     },
   });
+
+  if (withAuth) {
+    this.requireModule('@nuxtjs/auth');
+  }
+
+  authPlugins.forEach((plugin) => {
+    this.addTemplate({
+      src: join(__dirname, 'plugins', `${plugin}.js`),
+      fileName: join(MODULE_BUILD_DIR, 'plugins', `${plugin}.js`),
+      options: {
+        pkg,
+      },
+    });
+  });
+
   this.addPlugin({
-    src: join(__dirname, 'plugins/components.js'),
+    src: join(__dirname, 'plugins', 'components.js'),
     options: {
       components,
       pkg,
@@ -45,7 +66,7 @@ module.exports = function injectModule({
 
   ['axios', 'luxon', 'socket', 'states'].concat(plugins).forEach((plugin) => {
     this.addPlugin({
-      src: join(__dirname, `plugins/${plugin}.js`),
+      src: join(__dirname, 'plugins', `${plugin}.js`),
       options: {
         pkg,
       },
@@ -53,16 +74,12 @@ module.exports = function injectModule({
   });
 
   this.addPlugin({
-    src: join(__dirname, 'api/index.js'),
+    src: join(__dirname, 'api', 'index.js'),
     options: {
       api,
       pkg,
     },
   });
-
-  if (withAuth) {
-    this.requireModule('@nuxtjs/auth');
-  }
 
   this.requireModule(['qonfucius-nuxt-bulma', { css: false, postcss: false }]);
   this.requireModule('qonfucius-nuxt-fontawesome');
