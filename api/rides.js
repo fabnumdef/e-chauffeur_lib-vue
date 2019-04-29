@@ -24,13 +24,8 @@ export default axios => (campus, mask) => {
             mask,
             filters: merge({}, filters, { status }),
           },
-          headers: {
-            Range: `${ENTITY}=-10`,
-          },
         },
       );
-
-      response.pagination = computePagination(response)[ENTITY];
 
       return response;
     },
