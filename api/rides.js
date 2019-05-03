@@ -40,20 +40,24 @@ export default axios => (campus, mask) => {
       );
     },
 
-    async getRides(start, end, { format = null, count = 10 } = {}) {
+    async getRides(start, end, {
+      format = null, offset = 0, limit = 30, csv = {},
+    } = {}) {
       const headers = {
-        Range: `${ENTITY}=-${count}`,
+        Range: `${ENTITY}=${offset}-${offset + limit - 1}`,
+      };
+      const localParams = {
+        mask: csv.mask || mask,
+        filters: merge({}, filters, { start, end }),
       };
       if (format) {
         headers.Accept = format;
+        localParams.csv = csv;
       }
       const response = await axios.get(
         `/${ENTITY_PLURAL}`,
         {
-          params: {
-            mask,
-            filters: merge({}, filters, { start, end }),
-          },
+          params: localParams,
           headers,
         },
       );
