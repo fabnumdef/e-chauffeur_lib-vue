@@ -1,6 +1,7 @@
 const { join } = require('path');
 const merge = require('lodash.merge');
 const pkg = require('./package.json');
+
 const MODULE_BUILD_DIR = 'lib-eChauffeur';
 
 module.exports = function injectModule({
