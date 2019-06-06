@@ -1,7 +1,8 @@
-import merge from 'lodash.merge';
 import { computePagination } from './helpers';
+import merge from "lodash.merge";
 
-const ENTITY = 'pois';
+const ENTITY = 'phone';
+const ENTITY_PLURAL = 'phones';
 
 export default axios => (campus, mask) => {
   const filters = {};
@@ -13,44 +14,34 @@ export default axios => (campus, mask) => {
     filters,
   };
   return {
-    async getPois(offset = 0, limit = 30, search = null) {
+    async getPhones(offset = 0, limit = 30, search = null) {
       const response = await axios.get(
-        `/${ENTITY}`,
+        `/${ENTITY_PLURAL}`,
         {
           params: merge(params, { search }),
           headers: {
-            Range: `poi=${offset}-${offset + limit - 1}`,
+            Range: `${ENTITY}=${offset}-${offset + limit - 1}`,
           },
         },
       );
 
-      response.pagination = computePagination(response).poi;
+      response.pagination = computePagination(response)[ENTITY];
 
       return response;
     },
 
-    getPoi(id) {
+    async getPhone(id) {
       return axios.get(
-        `/${ENTITY}/${encodeURIComponent(id)}`,
+        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
         {
           params,
         },
       );
     },
 
-    patchPoi(id, data) {
-      return axios.patch(
-        `/${ENTITY}/${encodeURIComponent(id)}`,
-        merge(data, { campus }),
-        {
-          params,
-        },
-      );
-    },
-
-    postPoi(data) {
+    postPhone(data) {
       return axios.post(
-        `/${ENTITY}`,
+        `/${ENTITY_PLURAL}`,
         merge(data, { campus }),
         {
           params,
@@ -58,13 +49,23 @@ export default axios => (campus, mask) => {
       );
     },
 
-    deletePoi(id) {
-      return axios.delete(
-        `/${ENTITY}/${encodeURIComponent(id)}`,
+    patchPhone(id, data) {
+      return axios.patch(
+        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
+        merge(data, { campus }),
         {
           params,
         },
       );
     },
-  };
+
+    deletePhone(id) {
+      return axios.delete(
+        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
+        {
+          params,
+        },
+      );
+    },
+  }
 };
