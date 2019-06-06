@@ -1,5 +1,6 @@
 const { join } = require('path');
 const merge = require('lodash.merge');
+const lGet = require('lodash.get');
 const pkg = require('./package.json');
 
 const MODULE_BUILD_DIR = 'lib-eChauffeur';
@@ -29,7 +30,9 @@ module.exports = function injectModule({
           },
         },
       },
-      plugins: authPlugins.map(plugin => join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin}.js`)),
+      plugins: authPlugins
+        .map(plugin => join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin}.js`))
+        .concat(lGet(this.options, 'auth.plugins', [])),
     },
     toast: {
       position: 'bottom-right',

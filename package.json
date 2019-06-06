@@ -1,6 +1,6 @@
 {
   "name": "@fabnumdef/e-chauffeur_lib-vue",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "index.js",
   "scripts": {
     "lint": "vue-cli-service lint -- src tests config",
@@ -19,11 +19,12 @@
   "homepage": "https://github.com/fabnumdef/e-chauffeur_lib-vue#readme",
   "dependencies": {
     "@fabnumdef/design-system": "0.0.1",
-    "@nuxtjs/auth": "^4.6.5",
-    "@nuxtjs/axios": "^5.5.3",
+    "@nuxtjs/auth": "^4.6.6",
+    "@nuxtjs/axios": "^5.5.4",
     "@nuxtjs/pwa": "^3.0.0-beta.16",
     "@nuxtjs/toast": "^3.2.1",
     "javascript-state-machine": "^3.1.0",
+    "lodash.get": "^4.4.2",
     "lodash.merge": "^4.6.1",
     "luxon": "^1.16.0",
     "qonfucius-nuxt-bulma": "0.0.3",
@@ -33,10 +34,10 @@
     "vue-socket.io-extended": "^3.2.1"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^5.0.11",
-    "@storybook/addon-knobs": "^5.0.11",
-    "@storybook/addon-links": "^5.0.11",
-    "@storybook/addon-notes": "^5.0.11",
+    "@storybook/addon-actions": "^5.1.1",
+    "@storybook/addon-knobs": "^5.1.1",
+    "@storybook/addon-links": "^5.1.1",
+    "@storybook/addon-notes": "^5.1.1",
     "@storybook/storybook-deployer": "^2.8.1",
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
