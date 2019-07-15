@@ -3,13 +3,13 @@ import { computePagination } from './helpers';
 const ENTITY = 'users';
 
 export default axios => ({
-  async getUsers(mask) {
+  async getUsers(mask, offset = 0, limit = 30) {
     const response = await axios.get(
       `/${ENTITY}`,
       {
         params: { mask },
         headers: {
-          Range: 'user=-10',
+          Range: `user=${offset}-${offset + limit - 1}`,
         },
       },
     );
