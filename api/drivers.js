@@ -4,13 +4,13 @@ const ENTITY_PLURAL = 'drivers';
 const ENTITY_CAMPUSES = 'campuses';
 
 export default axios => (campus, mask) => ({
-  async getDrivers() {
+  async getDrivers(offset = 0, limit = 30) {
     const response = await axios.get(
       `/${ENTITY_CAMPUSES}/${campus}/${ENTITY_PLURAL}`,
       {
         params: { campus, mask },
         headers: {
-          Range: 'user=-10',
+          Range: `user=${offset}-${offset + limit - 1}`,
         },
       },
     );
