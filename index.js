@@ -19,6 +19,9 @@ module.exports = function injectModule({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       ],
     },
+    build: {
+      transpile: ['@fabnumdef/e-chauffeur_lib-vue'],
+    },
     loading: { color: '#fff' },
     auth: {
       strategies: {
@@ -94,6 +97,11 @@ module.exports = function injectModule({
   this.requireModule('@nuxtjs/pwa');
   this.requireModule('@nuxtjs/toast');
   this.requireModule('@nuxtjs/axios');
+  this.requireModule(['nuxt-env', {
+    keys: [
+      'API_URL',
+    ],
+  }]);
 };
 
 module.exports.meta = require('./package.json');

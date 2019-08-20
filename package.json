@@ -1,6 +1,6 @@
 {
   "name": "@fabnumdef/e-chauffeur_lib-vue",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": "index.js",
   "scripts": {
     "lint": "vue-cli-service lint -- src tests config",
@@ -27,6 +27,7 @@
     "lodash.get": "^4.4.2",
     "lodash.merge": "^4.6.2",
     "luxon": "^1.17.2",
+    "nuxt-env": "^0.1.0",
     "qonfucius-nuxt-bulma": "0.0.3",
     "qonfucius-nuxt-fontawesome": "^1.0.1",
     "qs": "^6.7.0",
