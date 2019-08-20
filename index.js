@@ -47,6 +47,10 @@ module.exports = function injectModule({
     manifest: {
       lang: 'fr',
     },
+    build: {
+      parallel: true,
+      transpile: ['@fabnumdef/e-chauffeur_lib-vue'],
+    },
   });
 
   if (withAuth) {
