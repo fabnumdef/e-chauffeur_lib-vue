@@ -20,6 +20,7 @@ module.exports = function injectModule({
       ],
     },
     build: {
+      parallel: true,
       transpile: ['@fabnumdef/e-chauffeur_lib-vue'],
     },
     loading: { color: '#fff' },
@@ -41,15 +42,8 @@ module.exports = function injectModule({
       position: 'bottom-right',
       duration: 15000,
     },
-    env: {
-      apiUrl: process.env.API_URL,
-    },
     manifest: {
       lang: 'fr',
-    },
-    build: {
-      parallel: true,
-      transpile: ['@fabnumdef/e-chauffeur_lib-vue'],
     },
   });
 
