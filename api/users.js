@@ -14,7 +14,7 @@ export default axios => ({
         },
       },
     );
-    response.pagination = computePagination(response).user;
+    response.pagination = computePagination(response)[ENTITY];
 
     return response;
   },

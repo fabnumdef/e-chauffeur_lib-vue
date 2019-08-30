@@ -26,8 +26,9 @@ export default axios => ({
         params: { mask },
       },
     );
-
-    response.data = Object.assign({ phone: {} }, response.data);
+    if (response.data) {
+      response.data = Object.assign({ phone: {} }, response.data);
+    }
     return response;
   },
   patchCampus(id, data, mask) {
