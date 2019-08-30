@@ -1,7 +1,7 @@
-const ACCEPT_RANGES = 'accept-ranges';
-const CONTENT_RANGE = 'content-range';
+const ACCEPT_RANGES = 'x-accept-ranges';
+const CONTENT_RANGE = 'x-content-range';
+export const RANGE = 'X-Range';
 
-// eslint-disable-next-line import/prefer-default-export
 export const computePagination = (response) => {
   const paginations = {};
   (response.headers[ACCEPT_RANGES] || '').split(',').forEach((range) => {

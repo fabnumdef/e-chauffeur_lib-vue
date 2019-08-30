@@ -1,6 +1,6 @@
 {
   "name": "@fabnumdef/e-chauffeur_lib-vue",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "index.js",
   "scripts": {
     "lint": "vue-cli-service lint -- src tests config",
@@ -20,7 +20,7 @@
   "dependencies": {
     "@fabnumdef/design-system": "0.0.1",
     "@nuxtjs/auth": "^4.8.1",
-    "@nuxtjs/axios": "^5.5.4",
+    "@nuxtjs/axios": "^5.6.0",
     "@nuxtjs/pwa": "^3.0.0-beta.16",
     "@nuxtjs/toast": "^3.2.1",
     "javascript-state-machine": "^3.1.0",
@@ -40,15 +40,15 @@
     "@storybook/addon-links": "^5.1.11",
     "@storybook/addon-notes": "^5.1.11",
     "@storybook/storybook-deployer": "^2.8.1",
-    "@vue/cli-plugin-babel": "^3.10.0",
-    "@vue/cli-plugin-eslint": "^3.10.0",
-    "@vue/cli-plugin-unit-mocha": "^3.10.0",
-    "@vue/cli-service": "^3.10.0",
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-eslint": "^3.11.0",
+    "@vue/cli-plugin-unit-mocha": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
     "@vue/eslint-config-airbnb": "^4.0.1",
     "@vue/test-utils": "1.0.0-beta.29",
-    "babel-eslint": "^10.0.2",
+    "babel-eslint": "^10.0.3",
     "chai": "^4.1.2",
-    "eslint": "^6.1.0",
+    "eslint": "^6.2.2",
     "eslint-plugin-vue": "^5.2.3",
     "vue-cli-plugin-storybook": "^0.6.1",
     "vue-template-compiler": "^2.5.21"

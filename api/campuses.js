@@ -1,17 +1,17 @@
-import { computePagination } from './helpers';
+import { computePagination, RANGE } from './helpers';
 
 
 export const ENTITY = 'campus';
 export const ENTITY_PLURAL = 'campuses';
 
 export default axios => ({
-  async getCampuses(mask, { search = null } = {}) {
+  async getCampuses(mask, { search = null } = {}, offset = 0, limit = 30) {
     const response = await axios.get(
       `/${ENTITY_PLURAL}`,
       {
         params: { mask, search },
         headers: {
-          Range: `${ENTITY}=-10`,
+          [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
         },
       },
     );

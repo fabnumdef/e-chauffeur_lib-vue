@@ -1,4 +1,5 @@
-import { computePagination } from './helpers';
+import { computePagination, RANGE } from './helpers';
+import {ENTITY as ENTITY_USER} from './users';
 
 const ENTITY_PLURAL = 'drivers';
 const ENTITY_CAMPUSES = 'campuses';
@@ -10,12 +11,12 @@ export default axios => (campus, mask) => ({
       {
         params: { campus, mask },
         headers: {
-          Range: `user=${offset}-${offset + limit - 1}`,
+          [RANGE]: `${ENTITY_USER}=${offset}-${offset + limit - 1}`,
         },
       },
     );
 
-    response.pagination = computePagination(response).user;
+    response.pagination = computePagination(response)[ENTITY_USER];
 
     return response;
   },

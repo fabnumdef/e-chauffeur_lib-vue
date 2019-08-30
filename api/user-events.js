@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import { computePagination } from './helpers';
+import { computePagination, RANGE } from './helpers';
 
 const ENTITY = 'user-event';
 const ENTITY_PLURAL = 'user-events';
@@ -14,13 +14,13 @@ export default axios => (user, mask = ',') => {
     filters,
   };
   return {
-    async getUserEvents() {
+    async getUserEvents(offset = 0, limit = 30) {
       const response = await axios.get(
         `/${ENTITY_PLURAL}`,
         {
           params,
           headers: {
-            Range: `${ENTITY}=-10`,
+            [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
           },
         },
       );

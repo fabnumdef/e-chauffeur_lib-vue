@@ -1,4 +1,4 @@
-import { computePagination } from './helpers';
+import { computePagination, RANGE } from './helpers';
 
 const ENTITY = 'category';
 const ENTITY_PLURAL = 'categories';
@@ -10,13 +10,13 @@ export default axios => (mask) => {
     filters,
   };
   return {
-    async getCategories() {
+    async getCategories(offset = 0, limit = 30) {
       const response = await axios.get(
         `/${ENTITY_PLURAL}`,
         {
           params,
           headers: {
-            Range: `${ENTITY}=-10`,
+            [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
           },
         },
       );

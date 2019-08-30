@@ -1,6 +1,8 @@
 import merge from 'lodash.merge';
+import {RANGE} from "./helpers";
 
-const ENTITY = 'logs';
+const ENTITY = 'log';
+const ENTITY_PLURAL = 'logs';
 
 export default axios => (mask) => {
   const filters = {};
@@ -11,11 +13,11 @@ export default axios => (mask) => {
   return {
     async getLogs(offset = 0, limit = 30, search = null) {
       const response = await axios.get(
-        `/${ENTITY}`,
+        `/${ENTITY_PLURAL}`,
         {
           params: merge(params, { search }),
           headers: {
-            Range: `log=${offset}-${offset + limit - 1}`,
+            [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
           },
         },
       );

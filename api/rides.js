@@ -1,6 +1,6 @@
 import merge from 'lodash.merge';
 import { Interval, DateTime } from 'luxon';
-import { computePagination } from './helpers';
+import { computePagination, RANGE } from './helpers';
 import { ENTITY_PLURAL as CAMPUS_PLURAL } from './campuses';
 
 export const ENTITY_PLURAL = 'rides';
@@ -44,7 +44,7 @@ export default axios => (campus, mask) => {
       format = null, offset = 0, limit = 30, csv = {},
     } = {}) {
       const headers = {
-        Range: `${ENTITY}=${offset}-${offset + limit - 1}`,
+        [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
       };
       const localParams = {
         mask: csv.mask || mask,

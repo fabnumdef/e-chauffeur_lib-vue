@@ -1,19 +1,19 @@
-import { computePagination } from './helpers';
+import { computePagination, RANGE } from './helpers';
 
-const ENTITY = 'users';
+export const ENTITY = 'user';
+const ENTITY_PLURAL = 'users';
 
 export default axios => ({
   async getUsers(mask, offset = 0, limit = 30) {
     const response = await axios.get(
-      `/${ENTITY}`,
+      `/${ENTITY_PLURAL}`,
       {
         params: { mask },
         headers: {
-          Range: `user=${offset}-${offset + limit - 1}`,
+          [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
         },
       },
     );
-
     response.pagination = computePagination(response).user;
 
     return response;
@@ -21,7 +21,7 @@ export default axios => ({
 
   getUser(id, mask) {
     return axios.get(
-      `/${ENTITY}/${encodeURIComponent(id)}`,
+      `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
       {
         params: { mask },
       },
@@ -30,7 +30,7 @@ export default axios => ({
 
   patchUser(id, data, mask, { sendToken = false }) {
     return axios.patch(
-      `/${ENTITY}/${encodeURIComponent(id)}`,
+      `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
       data,
       {
         params: { mask },
@@ -43,7 +43,7 @@ export default axios => ({
 
   postUser(data, mask, { sendToken = false }) {
     return axios.post(
-      `/${ENTITY}`,
+      `/${ENTITY_PLURAL}`,
       data,
       {
         params: { mask },
@@ -56,7 +56,7 @@ export default axios => ({
 
   deleteUser(id) {
     return axios.delete(
-      `/${ENTITY}/${encodeURIComponent(id)}`,
+      `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
     );
   },
 });

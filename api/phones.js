@@ -1,4 +1,4 @@
-import { computePagination } from './helpers';
+import { computePagination, RANGE } from './helpers';
 import merge from "lodash.merge";
 
 const ENTITY = 'phone';
@@ -20,7 +20,7 @@ export default axios => (campus, mask) => {
         {
           params: merge(params, { search }),
           headers: {
-            Range: `${ENTITY}=${offset}-${offset + limit - 1}`,
+            [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
           },
         },
       );

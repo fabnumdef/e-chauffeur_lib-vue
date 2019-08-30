@@ -1,7 +1,8 @@
 import merge from 'lodash.merge';
-import { computePagination } from './helpers';
+import { computePagination, RANGE } from './helpers';
 
-const ENTITY = 'pois';
+const ENTITY = 'poi';
+const ENTITY_PLURAL = 'pois';
 
 export default axios => (campus, mask) => {
   const filters = {};
@@ -15,23 +16,23 @@ export default axios => (campus, mask) => {
   return {
     async getPois(offset = 0, limit = 30, search = null) {
       const response = await axios.get(
-        `/${ENTITY}`,
+        `/${ENTITY_PLURAL}`,
         {
           params: merge(params, { search }),
           headers: {
-            Range: `poi=${offset}-${offset + limit - 1}`,
+            [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
           },
         },
       );
 
-      response.pagination = computePagination(response).poi;
+      response.pagination = computePagination(response)[ENTITY];
 
       return response;
     },
 
     getPoi(id) {
       return axios.get(
-        `/${ENTITY}/${encodeURIComponent(id)}`,
+        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
         {
           params,
         },
@@ -40,7 +41,7 @@ export default axios => (campus, mask) => {
 
     patchPoi(id, data) {
       return axios.patch(
-        `/${ENTITY}/${encodeURIComponent(id)}`,
+        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
         merge(data, { campus }),
         {
           params,
@@ -50,7 +51,7 @@ export default axios => (campus, mask) => {
 
     postPoi(data) {
       return axios.post(
-        `/${ENTITY}`,
+        `/${ENTITY_PLURAL}`,
         merge(data, { campus }),
         {
           params,
@@ -60,7 +61,7 @@ export default axios => (campus, mask) => {
 
     deletePoi(id) {
       return axios.delete(
-        `/${ENTITY}/${encodeURIComponent(id)}`,
+        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
         {
           params,
         },

@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import { computePagination } from './helpers';
+import { computePagination, RANGE } from './helpers';
 
 const ENTITY = 'car';
 const ENTITY_PLURAL = 'cars';
@@ -14,13 +14,13 @@ export default axios => (campus, mask) => {
     filters,
   };
   return {
-    async getCars() {
+    async getCars(offset = 0, limit = 30) {
       const response = await axios.get(
         `/${ENTITY_PLURAL}`,
         {
           params,
           headers: {
-            Range: `${ENTITY}=-10`,
+            [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
           },
         },
       );

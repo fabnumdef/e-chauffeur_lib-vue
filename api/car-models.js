@@ -1,10 +1,10 @@
-import { computePagination } from './helpers';
+import { computePagination, RANGE } from './helpers';
 
 const ENTITY = 'car-model';
 const ENTITY_PLURAL = 'car-models';
 
 export default axios => ({
-  async getCarModels(mask, { search = null } = {}) {
+  async getCarModels(mask, { search = null } = {}, offset = 0, limit = 30) {
     const params = { mask };
     if (search) {
       params.search = search;
@@ -14,7 +14,7 @@ export default axios => ({
       {
         params,
         headers: {
-          Range: `${ENTITY}=-10`,
+          [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
         },
       },
     );
