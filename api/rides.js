@@ -116,8 +116,8 @@ export default axios => (campus, mask) => {
         const user = u;
         if (u.availabilities) {
           user.availabilities = u.availabilities
-            .filter(r => r.s && r.e)
-            .map(a => Interval.fromDateTimes(DateTime.fromISO(a.s), DateTime.fromISO(a.e)));
+            .filter(r => r.start && r.end)
+            .map(a => Interval.fromDateTimes(DateTime.fromISO(a.start), DateTime.fromISO(a.end)));
         }
         return user;
       });
@@ -125,7 +125,7 @@ export default axios => (campus, mask) => {
     },
 
     async getDriversPositions(userMask) {
-      const response = await axios.get(
+      return axios.get(
         `/${CAMPUS_PLURAL}/${campus}/drivers-positions`,
         {
           params: {
@@ -133,16 +133,6 @@ export default axios => (campus, mask) => {
           },
         },
       );
-      response.data = response.data.map((u) => {
-        const user = u;
-        if (u.availabilities) {
-          user.availabilities = u.availabilities
-            .filter(r => r.s && r.e)
-            .map(a => Interval.fromDateTimes(DateTime.fromISO(a.s), DateTime.fromISO(a.e)));
-        }
-        return user;
-      });
-      return response;
     },
 
     async getAvailableCars(carMask, start, end, sort) {
