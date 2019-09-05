@@ -1,3 +1,4 @@
+export const CREATE = 'create';
 export const VALIDATE = 'validation';
 export const REJECT_BOUNDARY = 'rejection_boundary';
 export const REJECT_CAPACITY = 'rejection_capacity';

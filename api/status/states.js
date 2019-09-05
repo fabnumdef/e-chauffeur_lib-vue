@@ -1,3 +1,4 @@
+export const DRAFTED = 'drafted';
 export const CREATED = 'created';
 export const VALIDATED = 'validated'; // Regulation validation
 export const REJECTED_BOUNDARY = 'rejected_boundary'; // Regulation validation
