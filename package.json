@@ -1,6 +1,6 @@
 {
   "name": "@fabnumdef/e-chauffeur_lib-vue",
-  "version": "0.0.12",
+  "version": "0.0.14",
   "main": "index.js",
   "scripts": {
     "lint": "vue-cli-service lint -- src tests config",
@@ -19,9 +19,9 @@
   "homepage": "https://github.com/fabnumdef/e-chauffeur_lib-vue#readme",
   "dependencies": {
     "@fabnumdef/design-system": "0.0.1",
-    "@nuxtjs/auth": "^4.8.1",
+    "@nuxtjs/auth": "^4.8.2",
     "@nuxtjs/axios": "^5.6.0",
-    "@nuxtjs/pwa": "^3.0.0-beta.16",
+    "@nuxtjs/pwa": "^3.0.0-beta.18",
     "@nuxtjs/toast": "^3.2.1",
     "javascript-state-machine": "^3.1.0",
     "lodash.get": "^4.4.2",
@@ -48,7 +48,7 @@
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "^10.0.3",
     "chai": "^4.1.2",
-    "eslint": "^6.2.2",
+    "eslint": "^6.3.0",
     "eslint-plugin-vue": "^5.2.3",
     "vue-cli-plugin-storybook": "^0.6.1",
     "vue-template-compiler": "^2.5.21"
