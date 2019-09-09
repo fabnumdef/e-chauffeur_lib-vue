@@ -1,24 +1,27 @@
 import merge from 'lodash.merge';
 import { computePagination, RANGE } from './helpers';
 
-const ENTITY = 'user-event';
-const ENTITY_PLURAL = 'user-events';
+const ENTITY = 'time-slot';
+const ENTITY_PLURAL = 'time-slots';
 
-export default axios => (user, mask = ',') => {
+export default axios => (mask = ',', campus = null) => {
   const filters = {};
-  if (user) {
-    filters.user = user.id;
+  if (campus) {
+    filters.campus = campus;
   }
   const params = {
     mask,
     filters,
   };
   return {
-    async getUserEvents(offset = 0, limit = 30) {
+    async getTimeSlotsBetween(after, before, offset = 0, limit = 30) {
       const response = await axios.get(
         `/${ENTITY_PLURAL}`,
         {
-          params,
+          params: {
+            mask,
+            filters: merge({}, filters, { after, before }),
+          },
           headers: {
             [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
           },
@@ -29,38 +32,32 @@ export default axios => (user, mask = ',') => {
       return response;
     },
 
-    getUserEvent(id) {
-      return axios.get(
-        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
-        {
-          params,
-        },
-      );
-    },
-
-    patchUserEvent(id, data) {
+    editTimeSlot(id, data) {
       return axios.patch(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
-        merge(data, { user }),
+        merge(data, { campus }),
         {
           params,
         },
       );
     },
 
-    postUserEvent(data) {
+    createTimeSlot(data) {
       return axios.post(
         `/${ENTITY_PLURAL}`,
-        merge(data, { user }),
+        merge(data, { campus }),
         {
           params,
         },
       );
     },
 
-    deleteUserEvent(id) {
+    deleteTimeSlot(id) {
       return axios.delete(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
+        {
+          params,
+        },
       );
     },
   };
