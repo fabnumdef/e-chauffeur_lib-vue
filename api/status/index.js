@@ -1,6 +1,7 @@
 import StateMachine from 'javascript-state-machine';
 
 import {
+  DRAFTED,
   ACCEPTED,
   CANCELED,
   CANCELED_CUSTOMER_MISSING,
@@ -19,6 +20,7 @@ import {
 } from './states';
 
 import {
+  CREATE,
   ACCEPT,
   CANCEL_CUSTOMER_MISSING,
   DECLINE, DELIVER, PROGRESS,
@@ -46,6 +48,7 @@ export const CANCELABLE = [VALIDATED, ACCEPTED, STARTED, WAITING, IN_PROGRESS];
 export default (init = CREATED) => new StateMachine({
   init,
   transitions: [
+    { name: CREATE, from: DRAFTED, to: CREATED },
     { name: VALIDATE, from: CREATED, to: VALIDATED },
     { name: REJECT_BOUNDARY, from: CREATED, to: REJECTED_BOUNDARY },
     { name: REJECT_CAPACITY, from: CREATED, to: REJECTED_CAPACITY },
