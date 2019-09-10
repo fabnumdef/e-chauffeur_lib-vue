@@ -8,8 +8,7 @@ const MODULE_BUILD_DIR = 'lib-eChauffeur';
 module.exports = function injectModule({
   components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [],
 } = {}) {
-  const { buildDir } = this.options;
-  const { build } = this.options;
+  const { buildDir, build } = this.options;
   merge(this.options, {
     head: {
       htmlAttrs: {
