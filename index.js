@@ -9,6 +9,7 @@ module.exports = function injectModule({
   components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [],
 } = {}) {
   const { buildDir } = this.options;
+  const { build } = this.options;
   merge(this.options, {
     head: {
       htmlAttrs: {
@@ -21,7 +22,6 @@ module.exports = function injectModule({
     },
     build: {
       parallel: true,
-      transpile: ['@fabnumdef/e-chauffeur_lib-vue'],
     },
     loading: { color: '#fff' },
     auth: {
@@ -46,6 +46,8 @@ module.exports = function injectModule({
       lang: 'fr',
     },
   });
+
+  this.options.build.transpile = build.transpile.concat(['@fabnumdef/e-chauffeur_lib-vue']);
 
   if (withAuth) {
     this.requireModule('@nuxtjs/auth');
