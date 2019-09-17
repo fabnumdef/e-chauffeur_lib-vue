@@ -169,10 +169,12 @@ export default axios => (campus, mask) => {
         `/${CAMPUS_PLURAL}/${campus}/stats`,
         {
           params: {
-            mask: queriedStats,
+            mask: typeof queriedStats === 'string' ? queriedStats : queriedStats.mask,
             filters: {
               start,
               end,
+              'time-scope': typeof queriedStats === 'string' ? undefined : queriedStats.timeScope,
+              'time-unit': typeof queriedStats === 'string' ? undefined : queriedStats.timeUnit,
             },
           },
         },
