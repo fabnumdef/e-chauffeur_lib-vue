@@ -28,7 +28,7 @@ export default axios => ({
     );
   },
 
-  patchUser(id, data, mask, { sendToken = false }) {
+  patchUser(id, data, mask, { sendToken = false } = {}) {
     return axios.patch(
       `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
       data,
@@ -41,7 +41,7 @@ export default axios => ({
     );
   },
 
-  postUser(data, mask, { sendToken = false }) {
+  postUser(data, mask, { sendToken = false } = {}) {
     return axios.post(
       `/${ENTITY_PLURAL}`,
       data,
