@@ -1,3 +1,4 @@
+import merge from 'lodash.merge';
 import { computePagination, RANGE } from './helpers';
 
 const ENTITY = 'category';
@@ -10,11 +11,11 @@ export default axios => (mask) => {
     filters,
   };
   return {
-    async getCategories(offset = 0, limit = 30) {
+    async getCategories(offset = 0, limit = 30, { search = null } = {}) {
       const response = await axios.get(
         `/${ENTITY_PLURAL}`,
         {
-          params,
+          params: merge(params, { search }),
           headers: {
             [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
           },
