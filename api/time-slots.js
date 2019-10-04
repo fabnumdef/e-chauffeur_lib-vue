@@ -35,7 +35,7 @@ export default axios => (mask = ',', campus = null) => {
     editTimeSlot(id, data) {
       return axios.patch(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
-        merge(data, { campus }),
+        merge(data, { campus: { id: campus } }),
         {
           params,
         },
@@ -45,7 +45,7 @@ export default axios => (mask = ',', campus = null) => {
     createTimeSlot(data) {
       return axios.post(
         `/${ENTITY_PLURAL}`,
-        merge(data, { campus }),
+        merge(data, { campus: { id: campus } }),
         {
           params,
         },
