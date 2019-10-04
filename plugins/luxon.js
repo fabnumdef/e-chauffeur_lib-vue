@@ -14,6 +14,6 @@ export default () => {
     if (value === 'now') {
       return DateTime.local().toLocaleString(DateTime[`date_${format}`.toUpperCase()]);
     }
-    return value;
+    return DateTime.fromISO(value).toLocaleString(DateTime[`date_${format}`.toUpperCase()]);
   });
 };
