@@ -32,6 +32,16 @@ export default axios => (mask = ',', campus = null) => {
       return response;
     },
 
+    async getDriversTimeSlotsBetween(...args) {
+      params.filters.cars = 'null';
+      return this.getTimeSlotsBetween(...args);
+    },
+
+    async getCarsTimeSlotsBetween(...args) {
+      params.filters.drivers = 'null';
+      return this.getTimeSlotsBetween(...args);
+    },
+
     editTimeSlot(id, data) {
       return axios.patch(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
