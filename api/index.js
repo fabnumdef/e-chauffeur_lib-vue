@@ -11,3 +11,4 @@ export default function (ctx, inject) {
   ctx.$api = api;
   inject('api', api);
 }
+
