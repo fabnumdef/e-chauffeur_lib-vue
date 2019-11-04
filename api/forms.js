@@ -7,4 +7,10 @@ export default axios => ({
       fields,
     );
   },
+  async postRatingForm(fields) {
+    return axios.post(
+      `/${ENTITY_PLURAL}/rating`,
+      fields,
+    );
+  },
 });
