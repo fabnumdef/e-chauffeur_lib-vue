@@ -1,6 +1,5 @@
 import { computePagination, RANGE } from './helpers';
 
-
 export const ENTITY = 'campus';
 export const ENTITY_PLURAL = 'campuses';
 
