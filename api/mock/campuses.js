@@ -8,6 +8,13 @@ function generateCampus(id) {
     phone: {
       everybody: '0123456789',
     },
+    location: {
+      coordinates: [
+        -4.49948242820619,
+        48.3797180442881,
+      ],
+      type: 'Point',
+    },
   };
 }
 export default (mock) => {
