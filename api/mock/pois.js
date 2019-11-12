@@ -1,21 +1,19 @@
 import { ACCEPT_RANGES, CONTENT_RANGE } from '../helpers';
 import { ENTITY } from '../pois';
 
-function generatePoi(id, data) {
+export function generatePoi(id, data = {}) {
   return Object.assign({
     id,
-    name: 'Poi',
+    label: 'Lavoir de Saint-Martin',
+    location: {
+      type: 'Point',
+      coordinates: [-4.481348600000047, 48.394887],
+    },
   }, data);
 }
 export default (mock) => {
   mock.onGet('/pois').reply(200, [
-    generatePoi('BSL/lavoir', {
-      label: 'Lavoir de Saint-Martin',
-      location: {
-        type: 'Point',
-        coordinates: [-4.481348600000047, 48.394887],
-      },
-    }),
+    generatePoi('BSL/lavoir'),
     generatePoi('BSL/musee-marine', {
       label: 'Musée National de la Marine',
       location: {

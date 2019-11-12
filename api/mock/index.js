@@ -4,6 +4,7 @@ import usersMock from './users';
 import formsMock from './forms';
 import jwtMock from './jwt';
 import poisMock from './pois';
+import ridesMock from './rides';
 
 export default (axios) => {
   const mock = new MockAdapter(axios);
@@ -12,6 +13,7 @@ export default (axios) => {
   usersMock(mock);
   jwtMock(mock);
   poisMock(mock);
+  ridesMock(mock);
 
   mock.onAny().reply((config) => console.log(config));
 };
