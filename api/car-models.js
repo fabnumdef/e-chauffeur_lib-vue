@@ -1,7 +1,7 @@
 import { computePagination, RANGE } from './helpers';
 
-const ENTITY = 'car-model';
-const ENTITY_PLURAL = 'car-models';
+export const ENTITY = 'car-model';
+export const ENTITY_PLURAL = 'car-models';
 
 export default axios => ({
   async getCarModels(mask, { search = null } = {}, offset = 0, limit = 30) {

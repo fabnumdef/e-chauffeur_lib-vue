@@ -6,7 +6,7 @@ const pkg = require('./package.json');
 const MODULE_BUILD_DIR = 'lib-eChauffeur';
 
 module.exports = function injectModule({
-  components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [],
+  components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [], mockAxios = false,
 } = {}) {
   const { buildDir, build } = this.options;
   merge(this.options, {
@@ -83,6 +83,7 @@ module.exports = function injectModule({
     src: join(__dirname, 'api', 'index.js'),
     options: {
       api,
+      mocked: mockAxios,
       pkg,
     },
   });

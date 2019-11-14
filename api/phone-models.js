@@ -1,7 +1,7 @@
 import { computePagination, RANGE } from './helpers';
 
-const ENTITY = 'phone-model';
-const ENTITY_PLURAL = 'phone-models';
+export const ENTITY = 'phone-model';
+export const ENTITY_PLURAL = 'phone-models';
 
 export default axios => ({
   async getPhoneModels(mask, { search = null } = {}, offset = 0, limit = 30) {
