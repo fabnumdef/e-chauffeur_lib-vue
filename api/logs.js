@@ -1,7 +1,7 @@
 import { RANGE } from './helpers';
 
-const ENTITY = 'log';
-const ENTITY_PLURAL = 'logs';
+export const ENTITY = 'log';
+export const ENTITY_PLURAL = 'logs';
 
 export default axios => mask => ({
   async getLogs(offset = 0, limit = 30, search = null) {

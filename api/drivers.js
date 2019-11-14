@@ -1,8 +1,8 @@
 import { computePagination, RANGE } from './helpers';
 import {ENTITY as ENTITY_USER} from './users';
 
-const ENTITY_PLURAL = 'drivers';
-const ENTITY_CAMPUSES = 'campuses';
+export const ENTITY_PLURAL = 'drivers';
+export const ENTITY_CAMPUSES = 'campuses';
 
 export default axios => (campus, mask) => ({
   async getDrivers(offset = 0, limit = 30) {

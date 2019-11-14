@@ -1,5 +1,5 @@
-const ACCEPT_RANGES = 'x-accept-ranges';
-const CONTENT_RANGE = 'x-content-range';
+export const ACCEPT_RANGES = 'x-accept-ranges';
+export const CONTENT_RANGE = 'x-content-range';
 export const RANGE = 'X-Range';
 
 export const computePagination = (response) => {

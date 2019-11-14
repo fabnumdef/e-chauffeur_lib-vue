@@ -1,7 +1,7 @@
 import { computePagination, RANGE } from './helpers';
 
 export const ENTITY = 'user';
-const ENTITY_PLURAL = 'users';
+export const ENTITY_PLURAL = 'users';
 
 export default axios => ({
   async getUsers(mask, offset = 0, limit = 30) {
