@@ -33,9 +33,9 @@ module.exports = function injectModule({
           },
         },
       },
-      plugins: authPlugins
-        .map(plugin => join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin}.js`))
-        .concat(lGet(this.options, 'auth.plugins', [])),
+      plugins: lGet(this.options, 'auth.plugins', [])
+        .concat(authPlugins
+          .map(plugin => join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin}.js`))),
     },
     toast: {
       position: 'bottom-right',
@@ -96,6 +96,7 @@ module.exports = function injectModule({
   this.requireModule(['nuxt-env', {
     keys: [
       'API_URL',
+      'VAPID_PUBLIC_KEY',
     ],
   }]);
 };
