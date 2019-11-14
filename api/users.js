@@ -59,4 +59,14 @@ export default axios => ({
       `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
     );
   },
+
+  subscribeDevice(id, data, mask) {
+    return axios.post(
+      `/${ENTITY_PLURAL}/${encodeURIComponent(id)}/subscribe-device`,
+      data,
+      {
+        params: { mask },
+      },
+    );
+  },
 });
