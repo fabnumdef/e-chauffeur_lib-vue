@@ -40,7 +40,7 @@ export default axios => (campus, mask) => {
       );
     },
 
-    async getRides(start, end, {
+    async getRides(userId = '', start, end, {
       format = null, offset = 0, limit = 30, csv = {},
     } = {}) {
       const headers = {
@@ -48,12 +48,13 @@ export default axios => (campus, mask) => {
       };
       const localParams = {
         mask: csv.mask || mask,
-        filters: merge({}, filters, { start, end }),
+        filters: merge({}, filters, { userId, start, end }),
       };
       if (format) {
         headers.Accept = format;
         localParams.csv = csv;
       }
+
       const response = await axios.get(
         `/${ENTITY_PLURAL}`,
         {
