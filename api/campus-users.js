@@ -1,8 +1,8 @@
 import { computePagination, RANGE } from './helpers';
 import { ENTITY as ENTITY_USER } from './users';
 
-const ENTITY_PLURAL = 'users';
-const ENTITY_CAMPUSES = 'campuses';
+export const ENTITY_PLURAL = 'users';
+export const ENTITY_CAMPUSES = 'campuses';
 
 export default axios => (campus, mask) => ({
   async getUsers(offset = 0, limit = 30) {

@@ -6,7 +6,7 @@ const pkg = require('./package.json');
 const MODULE_BUILD_DIR = 'lib-eChauffeur';
 
 module.exports = function injectModule({
-  components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [],
+  components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [], mockAxios = false,
 } = {}) {
   const { buildDir, build } = this.options;
   merge(this.options, {
@@ -33,9 +33,9 @@ module.exports = function injectModule({
           },
         },
       },
-      plugins: authPlugins
-        .map(plugin => join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin}.js`))
-        .concat(lGet(this.options, 'auth.plugins', [])),
+      plugins: lGet(this.options, 'auth.plugins', [])
+        .concat(authPlugins
+          .map(plugin => join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin}.js`))),
     },
     toast: {
       position: 'bottom-right',
@@ -83,6 +83,7 @@ module.exports = function injectModule({
     src: join(__dirname, 'api', 'index.js'),
     options: {
       api,
+      mocked: mockAxios,
       pkg,
     },
   });
@@ -95,6 +96,7 @@ module.exports = function injectModule({
   this.requireModule(['nuxt-env', {
     keys: [
       'API_URL',
+      'VAPID_PUBLIC_KEY',
     ],
   }]);
 };

@@ -1,8 +1,8 @@
 import merge from 'lodash.merge';
 import { computePagination, RANGE } from './helpers';
 
-const ENTITY = 'poi';
-const ENTITY_PLURAL = 'pois';
+export const ENTITY = 'poi';
+export const ENTITY_PLURAL = 'pois';
 
 export default axios => (campus, mask) => {
   const filters = {};
