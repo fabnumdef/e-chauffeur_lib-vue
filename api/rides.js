@@ -40,7 +40,7 @@ export default axios => (campus, mask) => {
       );
     },
 
-    async getRides(userId = '', start, end, {
+    async getRides(filter, {
       format = null, offset = 0, limit = 30, csv = {},
     } = {}) {
       const headers = {
@@ -48,7 +48,7 @@ export default axios => (campus, mask) => {
       };
       const localParams = {
         mask: csv.mask || mask,
-        filters: merge({}, filters, { userId, start, end }),
+        filters: merge({}, filters, { ...filter }),
       };
       if (format) {
         headers.Accept = format;
@@ -196,6 +196,18 @@ export default axios => (campus, mask) => {
       } catch (e) {
         return {};
       }
+    },
+
+    deleteRide(userId, id) {
+      return axios.delete(
+        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
+        {
+          params: {
+            ...params,
+            filters: { userId },
+          },
+        },
+      );
     },
   };
 };
