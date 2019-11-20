@@ -6,7 +6,7 @@ const pkg = require('./package.json');
 const MODULE_BUILD_DIR = 'lib-eChauffeur';
 
 module.exports = function injectModule({
-  components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [], mockAxios = false,
+  components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [], mockAxios = false, accountRoute = 'account',
 } = {}) {
   const { buildDir, build } = this.options;
   merge(this.options, {
@@ -28,7 +28,7 @@ module.exports = function injectModule({
         local: {
           endpoints: {
             login: { url: '/jwt/generate?mask=token', method: 'post', propertyName: 'token' },
-            user: { url: '/jwt/user?mask=id,email,roles', method: 'get', propertyName: false },
+            user: { url: '/jwt/user?mask=id,email,roles,passwordExpiration', method: 'get', propertyName: false },
             logout: null,
           },
         },
@@ -57,6 +57,7 @@ module.exports = function injectModule({
       src: join(__dirname, 'plugins', `${plugin}.js`),
       fileName: join(MODULE_BUILD_DIR, 'plugins', `${plugin}.js`),
       options: {
+        accountRoute,
         pkg,
       },
     });
