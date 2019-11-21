@@ -4,10 +4,16 @@ import { computePagination, RANGE } from './helpers';
 export const ENTITY = 'poi';
 export const ENTITY_PLURAL = 'pois';
 
-export default axios => (campus, mask) => {
-  const filters = {};
+export default axios => (campus, mask, withDisabled) => {
+  let filters = {};
   if (campus) {
     filters.campus = campus.id;
+  }
+  if (withDisabled) {
+    filters = {
+      ...filters,
+      ...withDisabled,
+    };
   }
   const params = {
     mask,
@@ -15,10 +21,11 @@ export default axios => (campus, mask) => {
   };
   return {
     async getPois(offset = 0, limit = 30, search = null) {
+      const localParams = merge(params, { search });
       const response = await axios.get(
         `/${ENTITY_PLURAL}`,
         {
-          params: merge(params, { search }),
+          params: localParams,
           headers: {
             [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
           },
