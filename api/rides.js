@@ -40,15 +40,20 @@ export default axios => (campus, mask) => {
       );
     },
 
-    async getRides(filter, {
-      format = null, offset = 0, limit = 30, csv = {},
-    } = {}) {
+    async getRides(
+      start,
+      end,
+      {
+        format = null, offset = 0, limit = 30, csv = {},
+      } = {},
+      { filter },
+    ) {
       const headers = {
         [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
       };
       const localParams = {
         mask: csv.mask || mask,
-        filters: merge({}, filters, { ...filter }),
+        filters: merge({}, filters, { start, end }, { ...filter }),
       };
       if (format) {
         headers.Accept = format;
