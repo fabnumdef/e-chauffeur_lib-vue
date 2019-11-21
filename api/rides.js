@@ -46,7 +46,7 @@ export default axios => (campus, mask) => {
       {
         format = null, offset = 0, limit = 30, csv = {},
       } = {},
-      { filter },
+      { filter = {} } = {},
     ) {
       const headers = {
         [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
