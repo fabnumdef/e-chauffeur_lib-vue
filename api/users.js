@@ -1,7 +1,7 @@
 import { computePagination, RANGE } from './helpers';
 
 export const ENTITY = 'user';
-const ENTITY_PLURAL = 'users';
+export const ENTITY_PLURAL = 'users';
 
 export default axios => ({
   async getUsers(mask, offset = 0, limit = 30) {
@@ -57,6 +57,16 @@ export default axios => ({
   deleteUser(id) {
     return axios.delete(
       `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
+    );
+  },
+
+  subscribeDevice(id, data, mask) {
+    return axios.post(
+      `/${ENTITY_PLURAL}/${encodeURIComponent(id)}/subscribe-device`,
+      data,
+      {
+        params: { mask },
+      },
     );
   },
 });

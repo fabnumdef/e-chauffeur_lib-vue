@@ -1,8 +1,8 @@
 import merge from 'lodash.merge';
 import { computePagination, RANGE } from './helpers';
 
-const ENTITY = 'category';
-const ENTITY_PLURAL = 'categories';
+export const ENTITY = 'category';
+export const ENTITY_PLURAL = 'categories';
 
 export default axios => (mask) => {
   const filters = {};
