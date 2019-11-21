@@ -1,4 +1,4 @@
-export default function ({ app: { $auth, $api, $axios } }) {
+export default function ({ app: { $auth, $api, $axios, $toast } }) {
   if (process.client && !!window && !!JSON) {
     const TOKEN_STORAGE = `${$auth.options.token.prefix}${$auth.options.defaultStrategy}`;
     const TOKEN_PREFIX = `${$auth.strategies.local.options.tokenType} `;
@@ -21,7 +21,13 @@ export default function ({ app: { $auth, $api, $axios } }) {
             $axios.setHeader($auth.strategies.local.options.tokenName, `${TOKEN_PREFIX}${jwt}`);
             autoRenew();
           })
-          .catch(() => { setTimeout(autoRenew, 60 * 1000); });
+          .catch((e) => {
+            if (e.response && e.response.status === 401) {
+              $toast.error('Impossible de prolonger la session, le compte a expiré. Vous allez être déconnecté.');
+              $auth.logout();
+            }
+            setTimeout(autoRenew, 60 * 1000);
+          });
       } else {
         setTimeout(autoRenew, (expIn - renewTrigger) * 1000);
       }
