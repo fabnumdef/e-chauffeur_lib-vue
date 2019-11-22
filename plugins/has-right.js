@@ -13,8 +13,11 @@ export default function ({ app }) {
       if (!this.user || !this.user.roles) {
         return false;
       }
+
       return this.user.roles.find(
-        rule => roles[rule.role].includes(role) && (!campus || rule.campuses.includes(campus)),
+        rule => roles[rule.role]
+          .find(currentRole => role === currentRole)
+            && (!campus || rule.campuses.find(currentCampus => currentCampus.id === campus)),
       );
     },
     isRegulator(...params) {
