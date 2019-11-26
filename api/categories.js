@@ -4,7 +4,7 @@ import { computePagination, RANGE } from './helpers';
 export const ENTITY = 'category';
 export const ENTITY_PLURAL = 'categories';
 
-export default axios => (mask) => {
+export default (axios) => (mask) => {
   const filters = {};
   const params = {
     mask,

@@ -6,7 +6,7 @@ import { ENTITY_PLURAL as CAMPUS_PLURAL } from './campuses';
 export const ENTITY_PLURAL = 'rides';
 export const ENTITY = 'ride';
 
-export default axios => (campus, mask) => {
+export default (axios) => (campus, mask) => {
   const filters = {};
   if (campus) {
     filters.campus = campus;
@@ -122,8 +122,8 @@ export default axios => (campus, mask) => {
         const user = u;
         if (u.availabilities) {
           user.availabilities = u.availabilities
-            .filter(r => r.start && r.end)
-            .map(a => Interval.fromDateTimes(DateTime.fromISO(a.start), DateTime.fromISO(a.end)));
+            .filter((r) => r.start && r.end)
+            .map((a) => Interval.fromDateTimes(DateTime.fromISO(a.start), DateTime.fromISO(a.end)));
         }
         return user;
       });
@@ -162,8 +162,8 @@ export default axios => (campus, mask) => {
         const car = c;
         if (c.availabilities) {
           car.availabilities = c.availabilities
-            .filter(r => r.s && r.e)
-            .map(a => Interval.fromDateTimes(DateTime.fromISO(a.s), DateTime.fromISO(a.e)));
+            .filter((r) => r.s && r.e)
+            .map((a) => Interval.fromDateTimes(DateTime.fromISO(a.s), DateTime.fromISO(a.e)));
         }
         return car;
       });

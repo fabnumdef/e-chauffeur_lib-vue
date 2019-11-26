@@ -3,7 +3,7 @@ import { computePagination, RANGE } from './helpers';
 export const ENTITY = 'user';
 export const ENTITY_PLURAL = 'users';
 
-export default axios => ({
+export default (axios) => ({
   async getUsers(mask, offset = 0, limit = 30) {
     const response = await axios.get(
       `/${ENTITY_PLURAL}`,

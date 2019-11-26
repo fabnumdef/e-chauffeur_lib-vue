@@ -35,7 +35,7 @@ module.exports = function injectModule({
       },
       plugins: lGet(this.options, 'auth.plugins', [])
         .concat(authPlugins
-          .map(plugin => join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin}.js`))),
+          .map((plugin) => join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin}.js`))),
     },
     toast: {
       position: 'bottom-right',
@@ -88,6 +88,8 @@ module.exports = function injectModule({
       pkg,
     },
   });
+
+  this.addServerMiddleware(join(__dirname, 'server-middlewares', 'x-frame.js'));
 
   this.requireModule(['qonfucius-nuxt-bulma', { css: false, postcss: false }]);
   this.requireModule('qonfucius-nuxt-fontawesome');

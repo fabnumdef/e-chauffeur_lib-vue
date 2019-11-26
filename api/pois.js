@@ -4,7 +4,7 @@ import { computePagination, RANGE } from './helpers';
 export const ENTITY = 'poi';
 export const ENTITY_PLURAL = 'pois';
 
-export default axios => (campus, mask, withDisabled) => {
+export default (axios) => (campus, mask, withDisabled) => {
   let filters = {};
   if (campus) {
     filters.campus = campus.id;

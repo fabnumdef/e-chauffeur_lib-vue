@@ -4,7 +4,7 @@ import { computePagination, RANGE } from './helpers';
 export const ENTITY = 'car';
 export const ENTITY_PLURAL = 'cars';
 
-export default axios => (campus, mask) => {
+export default (axios) => (campus, mask) => {
   const filters = {};
   if (campus) {
     filters.campus = campus.id;

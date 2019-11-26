@@ -4,7 +4,7 @@ import { computePagination, RANGE } from './helpers';
 export const ENTITY = 'time-slot';
 export const ENTITY_PLURAL = 'time-slots';
 
-export default axios => (mask = ',', campus = null) => {
+export default (axios) => (mask = ',', campus = null) => {
   const filters = {};
   if (campus) {
     filters.campus = campus;

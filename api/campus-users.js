@@ -4,7 +4,7 @@ import { ENTITY as ENTITY_USER } from './users';
 export const ENTITY_PLURAL = 'users';
 export const ENTITY_CAMPUSES = 'campuses';
 
-export default axios => (campus, mask) => ({
+export default (axios) => (campus, mask) => ({
   async getUsers(offset = 0, limit = 30) {
     const response = await axios.get(
       `/${ENTITY_CAMPUSES}/${campus}/${ENTITY_PLURAL}`,

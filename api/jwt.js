@@ -1,5 +1,5 @@
 export const TOKEN_KEY = 'token';
-export default axios => ({
+export default (axios) => ({
   async getUser(mask) {
     return axios.get(
       '/jwt/user',

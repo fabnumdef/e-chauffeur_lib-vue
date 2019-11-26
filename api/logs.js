@@ -3,7 +3,7 @@ import { RANGE } from './helpers';
 export const ENTITY = 'log';
 export const ENTITY_PLURAL = 'logs';
 
-export default axios => mask => ({
+export default (axios) => (mask) => ({
   async getLogs(offset = 0, limit = 30, search = null) {
     return axios.get(
       `/${ENTITY_PLURAL}`,

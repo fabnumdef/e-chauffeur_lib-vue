@@ -3,7 +3,7 @@ import { RANGE, computePagination } from './helpers';
 const ENTITY = 'rating';
 const ENTITY_PLURAL = 'ratings';
 
-export default axios => mask => ({
+export default (axios) => (mask) => ({
   async postRating(fields) {
     return axios.post(
       `/${ENTITY_PLURAL}`,
