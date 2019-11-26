@@ -89,6 +89,8 @@ module.exports = function injectModule({
     },
   });
 
+  this.addServerMiddleware(join(__dirname, 'server-middlewares', 'x-frame.js'));
+
   this.requireModule(['qonfucius-nuxt-bulma', { css: false, postcss: false }]);
   this.requireModule('qonfucius-nuxt-fontawesome');
   this.requireModule('@nuxtjs/pwa');
