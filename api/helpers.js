@@ -7,7 +7,7 @@ export const computePagination = (response) => {
   (response.headers[ACCEPT_RANGES] || '').split(',').forEach((range) => {
     const regex = new RegExp(`${range} (\\d*)-(\\d*)/(\\d*)#(\\d*)`);
     const [, ...d] = regex.exec(response.headers[CONTENT_RANGE]);
-    const [offset, max, total, limit] = d.map(n => parseInt(n, 10));
+    const [offset, max, total, limit] = d.map((n) => parseInt(n, 10));
 
     paginations[range] = {
       offset,

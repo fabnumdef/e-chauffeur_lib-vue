@@ -1,4 +1,8 @@
-export default function ({ app: { $auth, $api, $axios, $toast } }) {
+export default function ({
+  app: {
+    $auth, $api, $axios, $toast,
+  },
+}) {
   if (process.client && !!window && !!JSON) {
     const TOKEN_STORAGE = `${$auth.options.token.prefix}${$auth.options.defaultStrategy}`;
     const TOKEN_PREFIX = `${$auth.strategies.local.options.tokenType} `;

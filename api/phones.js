@@ -1,10 +1,10 @@
+import merge from 'lodash.merge';
 import { computePagination, RANGE } from './helpers';
-import merge from "lodash.merge";
 
 export const ENTITY = 'phone';
 export const ENTITY_PLURAL = 'phones';
 
-export default axios => (campus, mask) => {
+export default (axios) => (campus, mask) => {
   const filters = {};
   if (campus) {
     filters.campus = campus.id;
@@ -67,5 +67,5 @@ export default axios => (campus, mask) => {
         },
       );
     },
-  }
+  };
 };

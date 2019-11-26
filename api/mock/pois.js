@@ -2,14 +2,15 @@ import { ACCEPT_RANGES, CONTENT_RANGE } from '../helpers';
 import { ENTITY } from '../pois';
 
 export function generatePoi(id, data = {}) {
-  return Object.assign({
+  return {
     id,
     label: 'Lavoir de Saint-Martin',
     location: {
       type: 'Point',
       coordinates: [-4.481348600000047, 48.394887],
     },
-  }, data);
+    ...data,
+  };
 }
 export default (mock) => {
   mock.onGet('/pois').reply(200, [

@@ -35,7 +35,7 @@ module.exports = function injectModule({
       },
       plugins: lGet(this.options, 'auth.plugins', [])
         .concat(authPlugins
-          .map(plugin => join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin}.js`))),
+          .map((plugin) => join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin}.js`))),
     },
     toast: {
       position: 'bottom-right',

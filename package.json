@@ -1,9 +1,9 @@
 {
   "name": "@fabnumdef/e-chauffeur_lib-vue",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "main": "index.js",
   "scripts": {
-    "lint": "vue-cli-service lint -- src tests config",
+    "lint": "vue-cli-service lint -- .",
     "storybook:build": "vue-cli-service storybook:build -c config/storybook",
     "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook",
     "storybook:deploy": "vue-cli-service storybook:build -c config/storybook -o gh-pages && storybook-to-ghpages --existing-output-dir=gh-pages",
@@ -46,11 +46,11 @@
     "@vue/cli-plugin-eslint": "^4.0.5",
     "@vue/cli-plugin-unit-mocha": "^4.0.5",
     "@vue/cli-service": "^4.0.5",
-    "@vue/eslint-config-airbnb": "^4.0.1",
+    "@vue/eslint-config-airbnb": "^5.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "^10.0.3",
     "chai": "^4.1.2",
-    "eslint": "^6.5.1",
+    "eslint": "^6.7.1",
     "eslint-plugin-vue": "^6.0.0",
     "vue-cli-plugin-storybook": "^0.6.1",
     "vue-template-compiler": "^2.5.21"

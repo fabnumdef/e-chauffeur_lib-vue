@@ -3,7 +3,7 @@ import * as roles from '<%=options.pkg.name%>/api/roles';
 
 const rolesKeys = {
   ...Object.keys(roles)
-    .map(r => ({ [r]: r }))
+    .map((r) => ({ [r]: r }))
     .reduce((acc, r) => Object.assign(acc, r), {}),
 };
 
@@ -15,9 +15,9 @@ export default function ({ app }) {
       }
 
       return this.user.roles.find(
-        rule => roles[rule.role]
-          .find(currentRole => role === currentRole)
-            && (!campus || rule.campuses.find(currentCampus => currentCampus.id === campus)),
+        (rule) => roles[rule.role]
+          .find((currentRole) => role === currentRole)
+            && (!campus || rule.campuses.find((currentCampus) => currentCampus.id === campus)),
       );
     },
     isRegulator(...params) {

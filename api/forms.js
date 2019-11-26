@@ -1,6 +1,6 @@
 export const ENTITY_PLURAL = 'forms';
 
-export default axios => ({
+export default (axios) => ({
   async postFormContact(fields) {
     return axios.post(
       `/${ENTITY_PLURAL}/contact`,

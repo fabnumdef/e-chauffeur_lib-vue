@@ -1,10 +1,10 @@
 import { computePagination, RANGE } from './helpers';
-import {ENTITY as ENTITY_USER} from './users';
+import { ENTITY as ENTITY_USER } from './users';
 
 export const ENTITY_PLURAL = 'drivers';
 export const ENTITY_CAMPUSES = 'campuses';
 
-export default axios => (campus, mask) => ({
+export default (axios) => (campus, mask) => ({
   async getDrivers(offset = 0, limit = 30) {
     const response = await axios.get(
       `/${ENTITY_CAMPUSES}/${campus}/${ENTITY_PLURAL}`,

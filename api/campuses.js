@@ -3,7 +3,7 @@ import { computePagination, RANGE } from './helpers';
 export const ENTITY = 'campus';
 export const ENTITY_PLURAL = 'campuses';
 
-export default axios => ({
+export default (axios) => ({
   async getCampuses(mask, { search = null } = {}, offset = 0, limit = 30) {
     const response = await axios.get(
       `/${ENTITY_PLURAL}`,
@@ -26,7 +26,7 @@ export default axios => ({
       },
     );
     if (response.data) {
-      response.data = Object.assign({ phone: {} }, response.data);
+      response.data = { phone: {}, ...response.data };
     }
     return response;
   },
