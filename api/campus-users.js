@@ -5,14 +5,23 @@ export const ENTITY_PLURAL = 'users';
 export const ENTITY_CAMPUSES = 'campuses';
 
 export default (axios) => (campus, mask) => ({
-  async getUsers(offset = 0, limit = 30) {
+  async getUsers({
+    offset = 0,
+    limit = 30,
+    format = null,
+    csv = {},
+  }) {
+    const params = { campus, mask };
+    const headers = { [RANGE]: `${ENTITY_USER}=${offset}-${offset + limit - 1}` };
+    if (format) {
+      headers.Accept = format;
+      params.csv = csv;
+    }
     const response = await axios.get(
       `/${ENTITY_CAMPUSES}/${campus}/${ENTITY_PLURAL}`,
       {
-        params: { campus, mask },
-        headers: {
-          [RANGE]: `${ENTITY_USER}=${offset}-${offset + limit - 1}`,
-        },
+        params,
+        headers,
       },
     );
 
