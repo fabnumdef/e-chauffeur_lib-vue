@@ -14,14 +14,24 @@ export default (axios) => (campus, mask) => {
     filters,
   };
   return {
-    async getCars(offset = 0, limit = 30) {
+    async getCars({
+      offset = 0,
+      limit = 30,
+      format = null,
+      csv = {},
+    } = {}) {
+      const headers = {
+        [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
+      };
+      if (format) {
+        headers.Accept = format;
+        params.csv = csv;
+      }
       const response = await axios.get(
         `/${ENTITY_PLURAL}`,
         {
           params,
-          headers: {
-            [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
-          },
+          headers,
         },
       );
 

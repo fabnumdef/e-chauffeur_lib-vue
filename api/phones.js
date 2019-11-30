@@ -14,14 +14,26 @@ export default (axios) => (campus, mask) => {
     filters,
   };
   return {
-    async getPhones(offset = 0, limit = 30, search = null) {
+    async getPhones({
+      offset = 0,
+      limit = 30,
+      search = null,
+      format = null,
+      csv = {},
+    } = {}) {
+      const localParams = merge(params, { search });
+      const headers = {
+        [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
+      };
+      if (format) {
+        headers.Accept = format;
+        localParams.csv = csv;
+      }
       const response = await axios.get(
         `/${ENTITY_PLURAL}`,
         {
-          params: merge(params, { search }),
-          headers: {
-            [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
-          },
+          params: localParams,
+          headers,
         },
       );
 

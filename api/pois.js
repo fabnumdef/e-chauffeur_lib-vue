@@ -20,15 +20,26 @@ export default (axios) => (campus, mask, withDisabled) => {
     filters,
   };
   return {
-    async getPois(offset = 0, limit = 30, search = null) {
+    async getPois({
+      offset = 0,
+      limit = 30,
+      search = null,
+      format = null,
+      csv = {},
+    } = {}) {
       const localParams = merge(params, { search });
+      const headers = {
+        [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
+      };
+      if (format) {
+        headers.Accept = format;
+        localParams.csv = csv;
+      }
       const response = await axios.get(
         `/${ENTITY_PLURAL}`,
         {
           params: localParams,
-          headers: {
-            [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
-          },
+          headers,
         },
       );
 
