@@ -43,7 +43,7 @@ export const CANCELED_STATUSES = [
   CANCELED_CUSTOMER_MISSING,
 ];
 
-export const CANCELABLE = [VALIDATED, ACCEPTED, STARTED, WAITING, IN_PROGRESS];
+export const CANCELABLE = [CREATED, VALIDATED, ACCEPTED, STARTED, WAITING, IN_PROGRESS];
 
 export default (init = CREATED) => new StateMachine({
   init,
