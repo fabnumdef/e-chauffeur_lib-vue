@@ -9,6 +9,7 @@ export const STARTED = 'started';
 export const WAITING = 'waiting';
 export const IN_PROGRESS = 'progress';
 export const DELIVERED = 'delivered';
+export const CANCEL_REQUESTED_CUSTOMER = 'cancel_requested_by_customer';
 export const CANCELED = 'canceled';
 export const CANCELED_TECHNICAL = 'canceled_technical';
 export const CANCELED_REQUESTED_CUSTOMER = 'canceled_requested_customer';
