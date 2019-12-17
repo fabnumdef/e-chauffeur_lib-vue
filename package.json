@@ -1,6 +1,6 @@
 {
   "name": "@fabnumdef/e-chauffeur_lib-vue",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "main": "index.js",
   "scripts": {
     "lint": "vue-cli-service lint -- .",
@@ -20,40 +20,40 @@
   "dependencies": {
     "@fabnumdef/design-system": "0.0.1",
     "@nuxtjs/auth": "^4.8.4",
-    "@nuxtjs/axios": "^5.6.0",
+    "@nuxtjs/axios": "^5.9.0",
     "@nuxtjs/pwa": "^3.0.0-beta.19",
     "@nuxtjs/toast": "^3.2.1",
     "axios-mock-adapter": "^1.17.0",
     "javascript-state-machine": "^3.1.0",
     "lodash.get": "^4.4.2",
     "lodash.merge": "^4.6.2",
-    "luxon": "^1.21.2",
+    "luxon": "^1.21.3",
     "nuxt-env": "^0.1.0",
     "qonfucius-nuxt-bulma": "0.0.3",
     "qonfucius-nuxt-fontawesome": "^1.0.1",
     "qs": "^6.9.1",
     "socket.io-client": "^2.3.0",
     "vue-phone-number-input": "^0.2.8",
-    "vue-socket.io-extended": "^3.2.2"
+    "vue-socket.io-extended": "^4.0.1"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^5.2.6",
-    "@storybook/addon-knobs": "^5.2.6",
-    "@storybook/addon-links": "^5.2.6",
-    "@storybook/addon-notes": "^5.2.6",
+    "@storybook/addon-actions": "^5.2.8",
+    "@storybook/addon-knobs": "^5.2.8",
+    "@storybook/addon-links": "^5.2.8",
+    "@storybook/addon-notes": "^5.2.8",
     "@storybook/storybook-deployer": "^2.8.1",
-    "@vue/cli-plugin-babel": "^4.0.5",
-    "@vue/cli-plugin-eslint": "^4.0.5",
-    "@vue/cli-plugin-unit-mocha": "^4.0.5",
-    "@vue/cli-service": "^4.0.5",
+    "@vue/cli-plugin-babel": "^4.1.1",
+    "@vue/cli-plugin-eslint": "^4.1.1",
+    "@vue/cli-plugin-unit-mocha": "^4.1.1",
+    "@vue/cli-service": "^4.1.1",
     "@vue/eslint-config-airbnb": "^5.0.0",
-    "@vue/test-utils": "1.0.0-beta.29",
+    "@vue/test-utils": "^1.0.0-beta.30",
     "babel-eslint": "^10.0.3",
     "chai": "^4.1.2",
-    "eslint": "^6.7.1",
+    "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.0.0",
     "vue-cli-plugin-storybook": "^0.6.1",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "^2.6.11"
   },
   "peerDependencies": {
     "vue": "2.x"
