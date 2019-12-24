@@ -44,18 +44,27 @@ export default (axios) => (campus, mask) => {
     },
 
     async getDriver(id) {
-      const response = await axios.get(
+      return axios.get(
         `/${ENTITY_CAMPUSES}/${campus}/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
         {
           params: { campus, mask },
         },
       );
-      return response;
     },
 
     postDriver(data) {
       return axios.post(
         `/${ENTITY_CAMPUSES}/${campus}/${ENTITY_PLURAL}/`,
+        data,
+        {
+          params: { campus, mask },
+        },
+      );
+    },
+
+    postDrivers(data) {
+      return axios.post(
+        `/${ENTITY_CAMPUSES}/${campus}/${ENTITY_PLURAL}/batch`,
         data,
         {
           params: { campus, mask },

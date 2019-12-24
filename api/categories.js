@@ -68,6 +68,16 @@ export default (axios) => (mask) => {
       );
     },
 
+    postCategories(data) {
+      return axios.post(
+        `/${ENTITY_PLURAL}/batch`,
+        data,
+        {
+          params,
+        },
+      );
+    },
+
     deleteCategory(id) {
       return axios.delete(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,

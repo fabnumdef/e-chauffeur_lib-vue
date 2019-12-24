@@ -61,6 +61,16 @@ export default (axios) => (campus, mask) => {
       );
     },
 
+    postPhones(data) {
+      return axios.post(
+        `/${ENTITY_PLURAL}/batch`,
+        merge(data, { campus }),
+        {
+          params,
+        },
+      );
+    },
+
     patchPhone(id, data) {
       return axios.patch(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,

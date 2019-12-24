@@ -67,6 +67,18 @@ export default (axios) => ({
     );
   },
 
+  postUsers(data, { sendToken = false } = {}) {
+    return axios.post(
+      `/${ENTITY_PLURAL}/batch`,
+      data,
+      {
+        headers: {
+          'X-Send-Token': sendToken,
+        },
+      },
+    );
+  },
+
   deleteUser(id) {
     return axios.delete(
       `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,

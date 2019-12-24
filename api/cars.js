@@ -69,6 +69,16 @@ export default (axios) => (campus, mask) => {
       );
     },
 
+    postCars(data) {
+      return axios.post(
+        `/${ENTITY_PLURAL}/batch`,
+        merge(data, { campus }),
+        {
+          params,
+        },
+      );
+    },
+
     deleteCar(id) {
       return axios.delete(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
