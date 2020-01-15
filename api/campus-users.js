@@ -31,18 +31,27 @@ export default (axios) => (campus, mask) => ({
   },
 
   async getUser(id) {
-    const response = await axios.get(
+    return axios.get(
       `/${ENTITY_CAMPUSES}/${campus}/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
       {
         params: { campus, mask },
       },
     );
-    return response;
   },
 
   postUser(data) {
     return axios.post(
       `/${ENTITY_CAMPUSES}/${campus}/${ENTITY_PLURAL}/`,
+      data,
+      {
+        params: { campus, mask },
+      },
+    );
+  },
+
+  postUsers(data) {
+    return axios.post(
+      `/${ENTITY_CAMPUSES}/${campus}/${ENTITY_PLURAL}/batch`,
       data,
       {
         params: { campus, mask },

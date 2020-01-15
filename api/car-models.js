@@ -64,6 +64,13 @@ export default (axios) => ({
     );
   },
 
+  postCarModels(data) {
+    return axios.post(
+      `/${ENTITY_PLURAL}/batch`,
+      data,
+    );
+  },
+
   deleteCarModel(id) {
     return axios.delete(
       `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,

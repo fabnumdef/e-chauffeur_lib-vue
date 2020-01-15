@@ -77,6 +77,16 @@ export default (axios) => (campus, mask, withDisabled) => {
       );
     },
 
+    postPois(data) {
+      return axios.post(
+        `/${ENTITY_PLURAL}/batch`,
+        merge(data, { campus }),
+        {
+          params,
+        },
+      );
+    },
+
     deletePoi(id) {
       return axios.delete(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
