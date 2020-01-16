@@ -69,12 +69,12 @@ export default (axios) => (campus, mask) => {
       );
     },
 
-    postCars(data) {
+    postCars(data, localParams) {
       return axios.post(
         `/${ENTITY_PLURAL}/batch`,
         merge(data, { campus }),
         {
-          params,
+          params: { ...params, ...localParams },
         },
       );
     },

@@ -67,11 +67,12 @@ export default (axios) => ({
     );
   },
 
-  postUsers(data, { sendToken = false } = {}) {
+  postUsers(data, { sendToken = false, delimiter = ';', ignoreEmpty = true } = {}) {
     return axios.post(
       `/${ENTITY_PLURAL}/batch`,
       data,
       {
+        params: { delimiter, ignoreEmpty },
         headers: {
           'X-Send-Token': sendToken,
         },

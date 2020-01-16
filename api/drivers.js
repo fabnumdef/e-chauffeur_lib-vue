@@ -62,12 +62,12 @@ export default (axios) => (campus, mask) => {
       );
     },
 
-    postDrivers(data) {
+    postDrivers(data, localParams) {
       return axios.post(
         `/${ENTITY_CAMPUSES}/${campus}/${ENTITY_PLURAL}/batch`,
         data,
         {
-          params: { campus, mask },
+          params: { campus, mask, ...localParams },
         },
       );
     },

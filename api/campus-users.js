@@ -49,12 +49,12 @@ export default (axios) => (campus, mask) => ({
     );
   },
 
-  postUsers(data) {
+  postUsers(data, localParams) {
     return axios.post(
       `/${ENTITY_CAMPUSES}/${campus}/${ENTITY_PLURAL}/batch`,
       data,
       {
-        params: { campus, mask },
+        params: { campus, mask, ...localParams },
       },
     );
   },
