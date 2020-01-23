@@ -68,12 +68,12 @@ export default (axios) => (mask) => {
       );
     },
 
-    postCategories(data) {
+    postCategories(data, localParams) {
       return axios.post(
         `/${ENTITY_PLURAL}/batch`,
         data,
         {
-          params,
+          params: { ...params, ...localParams },
         },
       );
     },

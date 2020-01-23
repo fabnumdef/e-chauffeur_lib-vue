@@ -64,10 +64,11 @@ export default (axios) => ({
     );
   },
 
-  postCarModels(data) {
+  postCarModels(data, params) {
     return axios.post(
       `/${ENTITY_PLURAL}/batch`,
       data,
+      { params },
     );
   },
 

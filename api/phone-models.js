@@ -64,10 +64,11 @@ export default (axios) => ({
     );
   },
 
-  postPhoneModels(data) {
+  postPhoneModels(data, params) {
     return axios.post(
       `/${ENTITY_PLURAL}/batch`,
       data,
+      { params },
     );
   },
 
