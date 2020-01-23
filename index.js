@@ -52,7 +52,7 @@ module.exports = function injectModule({
     this.requireModule('@nuxtjs/auth');
   }
 
-  this.requireModule('@qonfucius/nuxt-prometheus-module', prometheus);
+  this.requireModule(['@qonfucius/nuxt-prometheus-module', prometheus]);
 
   authPlugins.forEach((plugin) => {
     this.addTemplate({
