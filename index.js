@@ -6,7 +6,7 @@ const pkg = require('./package.json');
 const MODULE_BUILD_DIR = 'lib-eChauffeur';
 
 module.exports = function injectModule({
-  components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [], mockAxios = false, accountRoute = 'account',
+  components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [], mockAxios = false, accountRoute = 'account', prometheus = {},
 } = {}) {
   const { buildDir, build } = this.options;
   merge(this.options, {
@@ -51,6 +51,8 @@ module.exports = function injectModule({
   if (withAuth) {
     this.requireModule('@nuxtjs/auth');
   }
+
+  this.requireModule('@qonfucius/nuxt-prometheus-module', prometheus);
 
   authPlugins.forEach((plugin) => {
     this.addTemplate({
