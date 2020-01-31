@@ -1,6 +1,6 @@
 {
   "name": "@fabnumdef/e-chauffeur_lib-vue",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "main": "index.js",
   "scripts": {
     "lint": "vue-cli-service lint -- .",
