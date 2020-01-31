@@ -76,7 +76,15 @@ module.exports = function injectModule({
       pkg,
     },
   });
-
+  ['socket'].concat(plugins).forEach((plugin) => {
+    this.addPlugin({
+      src: join(__dirname, 'plugins', `${plugin}.js`),
+      mode: 'client',
+      options: {
+        pkg,
+      },
+    });
+  });
   ['axios', 'luxon', 'socket', 'states'].concat(plugins).forEach((plugin) => {
     this.addPlugin({
       src: join(__dirname, 'plugins', `${plugin}.js`),
