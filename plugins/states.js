@@ -3,15 +3,13 @@ import Vue from 'vue';
 import StateMachine from '<%=options.pkg.name%>/api/status';
 
 
-export default () => {
-  Vue.mixin({
-    methods: {
-      stateCanChange(current, projection) {
-        return StateMachine(current).can(projection);
-      },
-      getTransitions(status) {
-        return StateMachine(status).transitions();
-      },
+Vue.mixin({
+  methods: {
+    stateCanChange(current, projection) {
+      return StateMachine(current).can(projection);
     },
-  });
-};
+    getTransitions(status) {
+      return StateMachine(status).transitions();
+    },
+  },
+});
