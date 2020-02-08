@@ -4,9 +4,7 @@ import Vue from 'vue';
   import <%=componentKey%> from '<%=options.pkg.name%>/src/components/<%=options.components[componentKey]%>';
 <% })%>
 
-export default function ({ app, store }) {
-  <% Object.keys(options.components).forEach((componentKey) => { %>
-    Vue.component('<%=componentKey%>', <%=componentKey%>);
-  <% })%>
-}
+<% Object.keys(options.components).forEach((componentKey) => { %>
+  Vue.component('<%=componentKey%>', <%=componentKey%>);
+<% })%>
 

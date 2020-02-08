@@ -1,13 +1,13 @@
 // eslint-disable-next-line import/no-unresolved,import/extensions
 import * as roles from '<%=options.pkg.name%>/api/roles';
 
-const rolesKeys = {
-  ...Object.keys(roles)
-    .map((r) => ({ [r]: r }))
-    .reduce((acc, r) => Object.assign(acc, r), {}),
-};
-
 export default function ({ app }) {
+  const rolesKeys = {
+    ...Object.keys(roles)
+      .map((r) => ({ [r]: r }))
+      .reduce((acc, r) => Object.assign(acc, r), {}),
+  };
+
   Object.assign(app.$auth, {
     hasRole(role, campus) {
       if (!this.user || !this.user.roles) {

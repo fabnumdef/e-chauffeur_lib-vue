@@ -9,6 +9,7 @@ module.exports = function injectModule({
   components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [], mockAxios = false, accountRoute = 'account', prometheus = {},
 } = {}) {
   const { buildDir, build } = this.options;
+  const flavoredAuthPlugins = authPlugins.map(p => typeof p === 'string' ? {src: p} : p);
   merge(this.options, {
     head: {
       htmlAttrs: {
@@ -34,8 +35,11 @@ module.exports = function injectModule({
         },
       },
       plugins: lGet(this.options, 'auth.plugins', [])
-        .concat(authPlugins
-          .map((plugin) => join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin}.js`))),
+        .concat(flavoredAuthPlugins
+          .map((plugin) => ({
+            ...plugin,
+            src: join(buildDir, MODULE_BUILD_DIR, 'plugins', `${plugin.src}.js`)
+          }))),
     },
     toast: {
       position: 'bottom-right',
@@ -54,10 +58,10 @@ module.exports = function injectModule({
 
   this.requireModule(['@qonfucius/nuxt-prometheus-module', prometheus]);
 
-  authPlugins.forEach((plugin) => {
+  flavoredAuthPlugins.forEach(({src}) => {
     this.addTemplate({
-      src: join(__dirname, 'plugins', `${plugin}.js`),
-      fileName: join(MODULE_BUILD_DIR, 'plugins', `${plugin}.js`),
+      src: join(__dirname, 'plugins', `${src}.js`),
+      fileName: join(MODULE_BUILD_DIR, 'plugins', `${src}.js`),
       options: {
         accountRoute,
         pkg,
@@ -72,8 +76,17 @@ module.exports = function injectModule({
       pkg,
     },
   });
+  ['socket'].forEach((plugin) => {
+    this.addPlugin({
+      src: join(__dirname, 'plugins', `${plugin}.js`),
+      mode: 'client',
+      options: {
+        pkg,
+      },
+    });
+  });
 
-  ['axios', 'luxon', 'socket', 'states'].concat(plugins).forEach((plugin) => {
+  ['axios', 'luxon', 'states'].concat(plugins).forEach((plugin) => {
     this.addPlugin({
       src: join(__dirname, 'plugins', `${plugin}.js`),
       options: {
