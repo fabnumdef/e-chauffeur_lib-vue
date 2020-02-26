@@ -1,0 +1,50 @@
+stages:
+  - test
+  - build
+  - deploy
+
+include:
+  - template: Dependency-Scanning.gitlab-ci.yml
+  - template: License-Management.gitlab-ci.yml
+
+variables:
+  DS_DISABLE_DIND: "true"
+
+retire-js-dependency_scanning:
+  only:
+    changes:
+      - package-lock.json
+
+gemnasium-dependency_scanning:
+  only:
+    changes:
+      - package-lock.json
+
+license_management:
+  only:
+    changes:
+      - package-lock.json
+
+image: node:alpine
+before_script:
+  - npm install
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+test_lint:
+  stage: test
+  script:
+    - npm run lint
+
+pages:
+  stage: deploy
+  script:
+    - "npm run storybook:build"
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
