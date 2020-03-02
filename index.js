@@ -115,6 +115,7 @@ module.exports = function injectModule({
     keys: [
       'API_URL',
       'VAPID_PUBLIC_KEY',
+      'VERSION',
     ],
   }]);
 };

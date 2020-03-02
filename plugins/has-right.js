@@ -14,7 +14,7 @@ export default function ({ app }) {
         return false;
       }
 
-      return this.user.roles.find(
+      return !!this.user.roles.find(
         (rule) => roles[rule.role]
           .find((currentRole) => role === currentRole)
             && (!campus || rule.campuses.find((currentCampus) => currentCampus.id === campus)),
