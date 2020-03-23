@@ -39,12 +39,3 @@ test_lint:
   script:
     - npm run lint
 
-pages:
-  stage: deploy
-  script:
-    - "npm run storybook:build"
-  artifacts:
-    paths:
-      - public
-  only:
-    - master

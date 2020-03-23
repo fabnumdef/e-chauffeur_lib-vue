@@ -6,7 +6,7 @@ const pkg = require('./package.json');
 const MODULE_BUILD_DIR = 'lib-eChauffeur';
 
 module.exports = function injectModule({
-  components = {}, api = {}, plugins = [], withAuth = false, authPlugins = [], mockAxios = false, accountRoute = 'account', prometheus = {},
+  api = {}, plugins = [], withAuth = false, authPlugins = [], mockAxios = false, accountRoute = 'account', prometheus = {},
 } = {}) {
   const { buildDir, build } = this.options;
   const flavoredAuthPlugins = authPlugins.map(p => typeof p === 'string' ? {src: p} : p);
@@ -69,13 +69,6 @@ module.exports = function injectModule({
     });
   });
 
-  this.addPlugin({
-    src: join(__dirname, 'plugins', 'components.js'),
-    options: {
-      components,
-      pkg,
-    },
-  });
   ['socket'].forEach((plugin) => {
     this.addPlugin({
       src: join(__dirname, 'plugins', `${plugin}.js`),
