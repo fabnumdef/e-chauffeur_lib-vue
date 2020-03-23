@@ -17,7 +17,7 @@ export default (axios) => (campus, mask) => {
   };
   return {
     async getDriverRides(user, ...status) {
-      const response = await axios.get(
+      return axios.get(
         `/${CAMPUS_PLURAL}/${campus}/drivers/${user}/rides`,
         {
           params: {
@@ -26,8 +26,6 @@ export default (axios) => (campus, mask) => {
           },
         },
       );
-
-      return response;
     },
 
     async mutateRide({ id }, action) {
@@ -170,9 +168,14 @@ export default (axios) => (campus, mask) => {
       return response;
     },
 
-    async getStats(queriedStats, start, end) {
+    async getStats(queriedStats, start, end, campuses) {
+      let endpoint = `/${CAMPUS_PLURAL}/${campus}/stats`;
+      if (!campus) {
+        endpoint = '/stats';
+      }
+
       return axios.get(
-        `/${CAMPUS_PLURAL}/${campus}/stats`,
+        endpoint,
         {
           params: {
             mask: typeof queriedStats === 'string' ? queriedStats : queriedStats.mask,
@@ -181,6 +184,7 @@ export default (axios) => (campus, mask) => {
               end,
               'time-scope': typeof queriedStats === 'string' ? undefined : queriedStats.timeScope,
               'time-unit': typeof queriedStats === 'string' ? undefined : queriedStats.timeUnit,
+              campuses,
             },
           },
         },
