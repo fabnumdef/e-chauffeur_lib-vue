@@ -16,24 +16,39 @@ export default (axios) => (campus, mask) => {
     filters,
   };
   return {
-    async getDriverRides(user, ...status) {
+    async getDriverRides(user, format = null, ...status) {
       return axios.get(
         `/${CAMPUS_PLURAL}/${campus}/drivers/${user}/rides`,
         {
           params: {
             mask,
-            filters: merge({}, filters, { status }),
+            filters: merge({}, filters, { format }, { status }),
           },
         },
       );
     },
 
-    async mutateRide({ id }, action) {
+    async mutateRide(ride, action, option) {
+      let { id } = ride;
+      let localParams = {};
+      if (option === 'step') {
+        localParams = {
+          step: ride,
+        };
+        id = ride.rideId;
+        return id.map((i) => axios.post(
+          `/${ENTITY_PLURAL}/${encodeURIComponent(i)}/${action}`,
+          {},
+          {
+            params: { ...params, ...localParams },
+          },
+        ));
+      }
       return axios.post(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}/${action}`,
         {},
         {
-          params,
+          params: { ...params, ...localParams },
         },
       );
     },
@@ -93,12 +108,12 @@ export default (axios) => (campus, mask) => {
       );
     },
 
-    async patchRide(id, data) {
+    async patchRide(id, data, step = {}) {
       return axios.patch(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
         data,
         {
-          params,
+          params: { ...params, step },
         },
       );
     },
