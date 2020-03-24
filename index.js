@@ -21,7 +21,7 @@ module.exports = function injectModule({
       ],
     },
     build: {
-      parallel: true,
+      extractCSS: true,
     },
     loading: { color: '#fff' },
     auth: {
