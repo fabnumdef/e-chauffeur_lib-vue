@@ -20,18 +20,4 @@ module.exports = {
     'no-alert': 0,
     'vue/component-name-in-template-casing': ['error', 'kebab-case'],
   },
-  settings: {
-    'import/resolver': {
-      webpack: {
-        config: {
-          resolve: {
-            extensions: ['.js', '.vue'],
-            alias: {
-              '~': __dirname,
-            },
-          },
-        },
-      },
-    },
-  },
 };
