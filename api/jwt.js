@@ -1,31 +1,39 @@
-export const TOKEN_KEY = 'token';
-export default (axios) => ({
-  async getUser(mask) {
-    return axios.get(
-      '/jwt/user',
-      {
-        params: { mask },
-      },
-    );
-  },
+import merge from 'lodash.merge';
+import AbstractQuery from './abstract/query';
 
-  async renewJWT() {
-    const { data } = await axios.post(
-      '/jwt/renew',
+export const TOKEN_KEY = 'token';
+
+export default class JWTQuery extends AbstractQuery {
+  static get baseEndpoint() {
+    return '/jwt';
+  }
+
+  async user(options) {
+    return this.constructor.axios.get(
+      this.constructor.getEndpoint('user'),
+      merge({
+        params: { mask: this.mask },
+      }, options),
+    );
+  }
+
+  async renew() {
+    const { data } = await this.constructor.axios.post(
+      this.constructor.getEndpoint('renew'),
       {},
       {
         params: { mask: TOKEN_KEY },
       },
     );
     return data[TOKEN_KEY];
-  },
+  }
 
-  async getCampuses(mask) {
-    return axios.get(
-      '/jwt/user/campuses',
+  async accessibleCampuses() {
+    return this.constructor.axios.get(
+      this.constructor.getEndpoint('user', 'campuses'),
       {
-        params: { mask },
+        params: { mask: this.mask },
       },
     );
-  },
-});
+  }
+}

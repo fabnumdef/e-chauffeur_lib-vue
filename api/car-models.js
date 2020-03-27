@@ -1,4 +1,4 @@
-import { computePagination, RANGE } from './helpers';
+import { computePagination, RANGE } from './abstract/helpers';
 
 export const ENTITY = 'car-model';
 export const ENTITY_PLURAL = 'car-models';

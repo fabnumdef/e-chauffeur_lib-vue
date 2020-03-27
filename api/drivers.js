@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import { computePagination, RANGE } from './helpers';
+import { computePagination, RANGE } from './abstract/helpers';
 import { ENTITY as ENTITY_USER } from './users';
 import { ENTITY } from './phones';
 

@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import { computePagination, RANGE } from './helpers';
+import { computePagination, RANGE } from './abstract/helpers';
 
 export const ENTITY = 'phone';
 export const ENTITY_PLURAL = 'phones';

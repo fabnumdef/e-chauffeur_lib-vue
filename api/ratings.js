@@ -1,9 +1,20 @@
-import { RANGE, computePagination } from './helpers';
+import { RANGE, computePagination } from './abstract/helpers';
+import AbstractCRUDQuery from './abstract/crud-query';
 
 const ENTITY = 'rating';
 const ENTITY_PLURAL = 'ratings';
 
-export default (axios) => (campus, mask) => {
+export default class RatingsQuery extends AbstractCRUDQuery {
+  static get ENTITY() {
+    return ENTITY;
+  }
+
+  static get ENTITY_PLURAL() {
+    return ENTITY_PLURAL;
+  }
+}
+
+export const deprecated = (axios) => (campus, mask) => {
   const filters = {};
   if (campus) {
     filters.campus = campus;

@@ -1,9 +1,20 @@
-import { computePagination, RANGE } from './helpers';
+import { computePagination, RANGE } from './abstract/helpers';
+import AbstractCRUDQuery from './abstract/crud-query';
 
 export const ENTITY = 'campus';
 export const ENTITY_PLURAL = 'campuses';
 
-export default (axios) => ({
+export default class CampusesQuery extends AbstractCRUDQuery {
+  static get ENTITY() {
+    return ENTITY;
+  }
+
+  static get ENTITY_PLURAL() {
+    return ENTITY_PLURAL;
+  }
+}
+
+export const deprecated = (axios) => ({
   async getCampuses(mask, {
     search = null,
     offset = 0,

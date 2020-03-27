@@ -1,10 +1,15 @@
-export const ENTITY_PLURAL = 'forms';
+import AbstractQuery from './abstract/query';
 
-export default (axios) => ({
-  async postFormContact(fields) {
-    return axios.post(
-      `/${ENTITY_PLURAL}/contact`,
-      fields,
+export default class FormsQuery extends AbstractQuery {
+  static get baseEndpoint() {
+    return '/forms';
+  }
+
+  async contact(data, options) {
+    return this.constructor.axios.post(
+      this.constructor.getEndpoint('contact'),
+      data,
+      options,
     );
-  },
-});
+  }
+}

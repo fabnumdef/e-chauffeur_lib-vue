@@ -1,12 +1,60 @@
 import merge from 'lodash.merge';
 import { Interval, DateTime } from 'luxon';
-import { computePagination, RANGE } from './helpers';
+import { computePagination, RANGE } from './abstract/helpers';
 import { ENTITY_PLURAL as CAMPUS_PLURAL } from './campuses';
+import Ride from './model-query/ride';
+import AbstractCampusCRUDQuery from './abstract/campus-crud-query';
 
 export const ENTITY_PLURAL = 'rides';
 export const ENTITY = 'ride';
 
-export default (axios) => (campus, mask) => {
+export default class RidesQuery extends AbstractCampusCRUDQuery {
+  static get ENTITY() {
+    return ENTITY;
+  }
+
+  static get ENTITY_PLURAL() {
+    return ENTITY_PLURAL;
+  }
+
+  list(start, end, options) {
+    return super.list(options).setFilter('start', start).setFilter('end', end);
+  }
+
+  get(id, options) {
+    return new Ride(async ({ token = false } = {}) => super.get(id, merge({
+      params: {
+        token,
+      },
+    }, options)));
+  }
+
+  getDriverPosition(id, options) {
+    return new Ride(async ({ token = false } = {}) => this.constructor.axios.get(
+      this.constructor.getEndpoint(id, 'position'),
+      merge({
+        params: {
+          mask: this.mask,
+          token,
+        },
+      }, options),
+    ));
+  }
+
+  async mutate(id, action) {
+    return this.constructor.axios.post(
+      this.constructor.getEndpoint(id, action),
+      {},
+      {
+        params: {
+          mask: this.mask,
+        },
+      },
+    );
+  }
+}
+
+export const deprecated = (axios) => (campus, mask) => {
   const filters = {};
   if (campus) {
     filters.campus = campus;

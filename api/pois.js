@@ -1,10 +1,21 @@
 import merge from 'lodash.merge';
-import { computePagination, RANGE } from './helpers';
+import { computePagination, RANGE } from './abstract/helpers';
+import AbstractCampusCRUDQuery from './abstract/campus-crud-query';
 
 export const ENTITY = 'poi';
 export const ENTITY_PLURAL = 'pois';
 
-export default (axios) => (campus, mask, withDisabled) => {
+export default class PoisQuery extends AbstractCampusCRUDQuery {
+  static get ENTITY() {
+    return ENTITY;
+  }
+
+  static get ENTITY_PLURAL() {
+    return ENTITY_PLURAL;
+  }
+}
+
+export const deprecated = (axios) => (campus, mask, withDisabled) => {
   let filters = {};
   if (campus) {
     filters.campus = campus.id;

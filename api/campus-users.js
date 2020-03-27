@@ -1,4 +1,4 @@
-import { computePagination, RANGE } from './helpers';
+import { computePagination, RANGE } from './abstract/helpers';
 import { ENTITY as ENTITY_USER } from './users';
 
 export const ENTITY_PLURAL = 'users';
