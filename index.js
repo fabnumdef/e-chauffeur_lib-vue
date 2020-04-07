@@ -98,6 +98,7 @@ module.exports = function injectModule({
   });
 
   this.addServerMiddleware(join(__dirname, 'server-middlewares', 'x-frame.js'));
+  this.addServerMiddleware({ path: '/version', handler: join(__dirname, 'server-middlewares', 'version.js') },);
 
   this.requireModule(['qonfucius-nuxt-bulma', { css: false, postcss: false }]);
   this.requireModule('qonfucius-nuxt-fontawesome');
@@ -108,7 +109,6 @@ module.exports = function injectModule({
     keys: [
       'API_URL',
       'VAPID_PUBLIC_KEY',
-      'VERSION',
     ],
   }]);
 };
