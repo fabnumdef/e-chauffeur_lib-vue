@@ -118,7 +118,7 @@ export default (axios) => (campus, mask) => {
       );
     },
 
-    async getAvailableDrivers(userMask, start, end) {
+    async getAvailableDrivers(userMask, start, end, onlyHeavyLicences = false) {
       const response = await axios.get(
         `/${CAMPUS_PLURAL}/${campus}/drivers`,
         {
@@ -127,6 +127,7 @@ export default (axios) => (campus, mask) => {
             filters: {
               start,
               end,
+              onlyHeavyLicences,
             },
           },
         },
@@ -136,7 +137,10 @@ export default (axios) => (campus, mask) => {
         if (u.availabilities) {
           user.availabilities = u.availabilities
             .filter((r) => r.start && r.end)
-            .map((a) => Interval.fromDateTimes(DateTime.fromISO(a.start), DateTime.fromISO(a.end)));
+            .map((a) => ({
+              interval: Interval.fromDateTimes(DateTime.fromISO(a.start), DateTime.fromISO(a.end)),
+              pattern: a.pattern,
+            }));
         }
         return user;
       });

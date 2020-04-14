@@ -1,8 +1,8 @@
 import merge from 'lodash.merge';
 import { computePagination, RANGE } from './helpers';
 
-export const ENTITY = 'loop-pattern';
-export const ENTITY_PLURAL = 'loop-patterns';
+export const ENTITY = 'pattern';
+export const ENTITY_PLURAL = 'patterns';
 
 export default (axios) => (campus, mask) => {
   const filters = {};
@@ -15,18 +15,16 @@ export default (axios) => (campus, mask) => {
   };
 
   return {
-    async getLoopPatterns({
+    async getPatterns({
       offset = 0,
       limit = 30,
       format = null,
-      csv = {},
-    }) {
+    } = {}) {
       const headers = {
         [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
       };
       if (format) {
         headers.Accept = format;
-        params.csv = csv;
       }
       const response = await axios.get(
         `/${ENTITY_PLURAL}`,
@@ -39,7 +37,7 @@ export default (axios) => (campus, mask) => {
 
       return response;
     },
-    async getLoopPattern(id) {
+    async getPattern(id) {
       return axios.get(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
         {
@@ -47,7 +45,7 @@ export default (axios) => (campus, mask) => {
         },
       );
     },
-    async patchLoopPattern(id, data) {
+    async patchPattern(id, data) {
       return axios.patch(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
         merge(data, { campus }),
@@ -56,7 +54,7 @@ export default (axios) => (campus, mask) => {
         },
       );
     },
-    async postLoopPattern(data) {
+    async postPattern(data) {
       return axios.post(
         `/${ENTITY_PLURAL}`,
         merge(data, { campus }),
@@ -65,7 +63,7 @@ export default (axios) => (campus, mask) => {
         },
       );
     },
-    async deleteLoopPattern(id) {
+    async deletePattern(id) {
       return axios.delete(
         `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
       );
