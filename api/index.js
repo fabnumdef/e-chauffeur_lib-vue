@@ -1,4 +1,3 @@
-import AbstractQuery from "<%=options.pkg.name%>/api/abstract";
 <% if(options.mocked) { %>
   import mockAxios from '<%=options.pkg.name%>/api/mock';
 <% } %>

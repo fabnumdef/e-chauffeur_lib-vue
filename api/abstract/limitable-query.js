@@ -15,4 +15,10 @@ export default class LimitableQuery extends FilterableQuery {
     this.search = search;
     return this;
   }
+
+  toCSV(parameters) {
+    this.format = 'text/csv';
+    this.csv = parameters;
+    return this;
+  }
 }

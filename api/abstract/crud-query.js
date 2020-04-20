@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import { computePagination, RANGE } from './helpers';
+import { computePagination, RANGE, ACCEPT } from './helpers';
 import AbstractQuery from './query';
 import LimitableQuery from './limitable-query';
 
@@ -19,7 +19,15 @@ export default class AbstractCRUDQuery extends AbstractQuery {
   list(options = {}) {
     return new LimitableQuery(async ({
       search, filters, limit = 30, offset = 0,
+      format,
+      csv,
     } = {}) => {
+      const headers = {
+        [RANGE]: `${this.constructor.ENTITY}=${offset}-${offset + limit - 1}`,
+      };
+      if (format) {
+        headers[ACCEPT] = format;
+      }
       const response = await this.constructor.axios.get(
         this.constructor.getEndpoint(),
         merge({
@@ -27,10 +35,9 @@ export default class AbstractCRUDQuery extends AbstractQuery {
             mask: this.mask,
             search,
             filters,
+            csv,
           },
-          headers: {
-            [RANGE]: `${this.constructor.ENTITY}=${offset}-${offset + limit - 1}`,
-          },
+          headers,
         }, options),
       );
       response.pagination = computePagination(response)[this.constructor.ENTITY];
@@ -41,6 +48,18 @@ export default class AbstractCRUDQuery extends AbstractQuery {
   async create(data, options = {}) {
     return this.constructor.axios.post(
       this.constructor.getEndpoint(),
+      data,
+      merge({
+        params: {
+          mask: this.mask,
+        },
+      }, options),
+    );
+  }
+
+  async batch(data, options = {}) {
+    return this.constructor.axios.post(
+      this.constructor.getEndpoint('batch'),
       data,
       merge({
         params: {

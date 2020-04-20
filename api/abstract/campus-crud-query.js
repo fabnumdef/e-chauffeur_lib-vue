@@ -1,11 +1,15 @@
 import AbstractCRUDQuery from './crud-query';
 
 export default class AbstractCampusCRUDQuery extends AbstractCRUDQuery {
-  static getEndpoint(...params) {
-    if (this.campus) {
-      return super.getEndpoint('campuses', this.campus, ...params);
+  get campusRoutePrefix() {
+    if (!this.campus) {
+      return null;
     }
-    return super.getEndpoint(...params);
+    return `/campuses/${encodeURIComponent(this.campus)}`;
+  }
+
+  getCampusEndpoint(...params) {
+    return [this.campusRoutePrefix, this.constructor.getEndpoint(...params)].join('');
   }
 
   setCampus(campus) {

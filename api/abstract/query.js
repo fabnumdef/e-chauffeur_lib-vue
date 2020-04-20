@@ -20,4 +20,8 @@ export default class AbstractQuery {
     this.mask = mask;
     return this;
   }
+
+  getMask() {
+    return this.mask;
+  }
 }
