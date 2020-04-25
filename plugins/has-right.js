@@ -21,10 +21,10 @@ export default function ({ app }) {
       );
     },
     isRegulator(...params) {
-      return this.hasRole(rolesKeys.ROLE_REGULATOR, ...params);
+      return this.isAdmin(...params) || this.hasRole(rolesKeys.ROLE_REGULATOR, ...params);
     },
     isAdmin(...params) {
-      return this.hasRole(rolesKeys.ROLE_ADMIN, ...params);
+      return this.isSuperAdmin() || this.hasRole(rolesKeys.ROLE_ADMIN, ...params);
     },
     isSuperAdmin(...params) {
       return this.hasRole(rolesKeys.ROLE_SUPERADMIN, ...params);

@@ -2,6 +2,7 @@ import merge from 'lodash.merge';
 import { computePagination, RANGE, ACCEPT } from './helpers';
 import AbstractQuery from './query';
 import LimitableQuery from './limitable-query';
+import FilterableQuery from './filterable-query';
 
 export default class AbstractCRUDQuery extends AbstractQuery {
   static get ENTITY() {
@@ -81,15 +82,18 @@ export default class AbstractCRUDQuery extends AbstractQuery {
     );
   }
 
-  async get(id) {
-    return this.constructor.axios.get(
+  get(id, options = {}) {
+    return new FilterableQuery(async ({
+      filters = {},
+    } = {}) => this.constructor.axios.get(
       this.constructor.getEndpoint(id),
-      {
+      merge({
         params: {
           mask: this.mask,
+          filters,
         },
-      },
-    );
+      }, options),
+    ));
   }
 
   async delete(id) {
