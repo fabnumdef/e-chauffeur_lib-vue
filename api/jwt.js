@@ -10,7 +10,7 @@ export default class JWTQuery extends AbstractQuery {
 
   async user(options) {
     return this.constructor.axios.get(
-      this.constructor.getEndpoint('user'),
+      this.getEndpoint('user'),
       merge({
         params: { mask: this.mask },
       }, options),
@@ -19,7 +19,7 @@ export default class JWTQuery extends AbstractQuery {
 
   async renew() {
     const { data } = await this.constructor.axios.post(
-      this.constructor.getEndpoint('renew'),
+      this.getEndpoint('renew'),
       {},
       {
         params: { mask: TOKEN_KEY },
@@ -30,7 +30,7 @@ export default class JWTQuery extends AbstractQuery {
 
   async accessibleCampuses() {
     return this.constructor.axios.get(
-      this.constructor.getEndpoint('user', 'campuses'),
+      this.getEndpoint('user', 'campuses'),
       {
         params: { mask: this.mask },
       },

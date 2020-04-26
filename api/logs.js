@@ -14,7 +14,7 @@ export default class FeedbackQuery extends AbstractQuery {
     return new LimitableQuery(async ({
       filters,
     } = {}) => this.constructor.axios.get(
-      this.constructor.getEndpoint('positions-history'),
+      this.getEndpoint('positions-history'),
       merge({
         params: {
           mask: this.mask,

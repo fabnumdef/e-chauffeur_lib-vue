@@ -8,8 +8,12 @@ export default class AbstractCampusCRUDQuery extends AbstractCRUDQuery {
     return `/campuses/${encodeURIComponent(this.campus)}`;
   }
 
-  getCampusEndpoint(...params) {
-    return [this.campusRoutePrefix, this.constructor.getEndpoint(...params)].join('');
+  getEndpoint(...params) {
+    const base = [this.constructor.baseEndpoint, ...params.map((f) => encodeURIComponent(f))].join('/');
+    if (!this.campus) {
+      return base;
+    }
+    return [this.campusRoutePrefix, base].join('');
   }
 
   setCampus(campus) {

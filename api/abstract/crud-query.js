@@ -30,7 +30,7 @@ export default class AbstractCRUDQuery extends AbstractQuery {
         headers[ACCEPT] = format;
       }
       const response = await this.constructor.axios.get(
-        this.constructor.getEndpoint(),
+        this.getEndpoint(),
         merge({
           params: {
             mask: this.mask,
@@ -48,7 +48,7 @@ export default class AbstractCRUDQuery extends AbstractQuery {
 
   async create(data, options = {}) {
     return this.constructor.axios.post(
-      this.constructor.getEndpoint(),
+      this.getEndpoint(),
       data,
       merge({
         params: {
@@ -60,7 +60,7 @@ export default class AbstractCRUDQuery extends AbstractQuery {
 
   async batch(data, options = {}) {
     return this.constructor.axios.post(
-      this.constructor.getEndpoint('batch'),
+      this.getEndpoint('batch'),
       data,
       merge({
         params: {
@@ -72,7 +72,7 @@ export default class AbstractCRUDQuery extends AbstractQuery {
 
   async edit(id, data, options = {}) {
     return this.constructor.axios.patch(
-      this.constructor.getEndpoint(id),
+      this.getEndpoint(id),
       data,
       merge({
         params: {
@@ -86,7 +86,7 @@ export default class AbstractCRUDQuery extends AbstractQuery {
     return new FilterableQuery(async ({
       filters = {},
     } = {}) => this.constructor.axios.get(
-      this.constructor.getEndpoint(id),
+      this.getEndpoint(id),
       merge({
         params: {
           mask: this.mask,
@@ -98,7 +98,7 @@ export default class AbstractCRUDQuery extends AbstractQuery {
 
   async delete(id) {
     return this.constructor.axios.delete(
-      this.constructor.getEndpoint(id),
+      this.getEndpoint(id),
     );
   }
 }

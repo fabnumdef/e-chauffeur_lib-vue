@@ -7,7 +7,7 @@ export default class FormsQuery extends AbstractQuery {
 
   async contact(data, options) {
     return this.constructor.axios.post(
-      this.constructor.getEndpoint('contact'),
+      this.getEndpoint('contact'),
       data,
       options,
     );

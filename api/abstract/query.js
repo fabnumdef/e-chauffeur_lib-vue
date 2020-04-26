@@ -3,8 +3,8 @@ export default class AbstractQuery {
     return '/';
   }
 
-  static getEndpoint(...params) {
-    return [this.baseEndpoint, ...params.map((f) => encodeURIComponent(f))].join('/');
+  getEndpoint(...params) {
+    return [this.constructor.baseEndpoint, ...params.map((f) => encodeURIComponent(f))].join('/');
   }
 
   static setAxios(axios) {
