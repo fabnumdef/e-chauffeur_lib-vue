@@ -1,3 +1,4 @@
+const package = require('./package.json');
 module.exports = {
   root: true,
   env: {
@@ -19,5 +20,6 @@ module.exports = {
     'max-len': ['error', { code: 120 }],
     'no-alert': 0,
     'vue/component-name-in-template-casing': ['error', 'kebab-case'],
+    'import/no-unresolved': ['error', { ignore: Object.keys(package.peerDependencies) }],
   },
 };
