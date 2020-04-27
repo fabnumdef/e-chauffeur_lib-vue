@@ -1,14 +1,23 @@
 import merge from 'lodash.merge';
 import { Interval, DateTime } from 'luxon';
-import { computePagination, RANGE } from './abstract/helpers';
-import { ENTITY_PLURAL as CAMPUS_PLURAL } from './campuses';
 import Ride from './model-query/ride';
-import AbstractCampusCRUDQuery from './abstract/campus-crud-query';
+import AbstractCRUDQuery from './abstract/crud-query';
+import FilterableQuery from './abstract/filterable-query';
 
 export const ENTITY_PLURAL = 'rides';
 export const ENTITY = 'ride';
 
-export default class RidesQuery extends AbstractCampusCRUDQuery {
+function injectAvailabilities(d) {
+  const data = d;
+  if (d.availabilities) {
+    data.availabilities = d.availabilities
+      .filter((r) => r.start && r.end)
+      .map((a) => Interval.fromDateTimes(DateTime.fromISO(a.start), DateTime.fromISO(a.end)));
+  }
+  return data;
+}
+
+export default class RidesQuery extends AbstractCRUDQuery {
   static get ENTITY() {
     return ENTITY;
   }
@@ -17,11 +26,23 @@ export default class RidesQuery extends AbstractCampusCRUDQuery {
     return ENTITY_PLURAL;
   }
 
-  list(start, end, options) {
+  get campusRoutePrefix() {
+    if (!this.campus) {
+      return null;
+    }
+    return `/campuses/${encodeURIComponent(this.campus)}`;
+  }
+
+  setCampus(campus) {
+    this.campus = campus;
+    return this;
+  }
+
+  list(start, end, options = {}) {
     return super.list(options).setFilter('start', start).setFilter('end', end);
   }
 
-  get(id, options) {
+  get(id, options = {}) {
     return new Ride(async ({ token = false } = {}) => super.get(id, merge({
       params: {
         token,
@@ -29,9 +50,9 @@ export default class RidesQuery extends AbstractCampusCRUDQuery {
     }, options)));
   }
 
-  getDriverPosition(id, options) {
+  getDriverPosition(id, options = {}) {
     return new Ride(async ({ token = false } = {}) => this.constructor.axios.get(
-      this.constructor.getEndpoint(id, 'position'),
+      this.getEndpoint(id, 'position'),
       merge({
         params: {
           mask: this.mask,
@@ -41,9 +62,20 @@ export default class RidesQuery extends AbstractCampusCRUDQuery {
     ));
   }
 
+  async driversPositions() {
+    return this.constructor.axios.get(
+      `${this.campusRoutePrefix}/drivers-positions`,
+      {
+        params: {
+          mask: this.mask,
+        },
+      },
+    );
+  }
+
   async mutate(id, action) {
     return this.constructor.axios.post(
-      this.constructor.getEndpoint(id, action),
+      this.getEndpoint(id, action),
       {},
       {
         params: {
@@ -52,234 +84,67 @@ export default class RidesQuery extends AbstractCampusCRUDQuery {
       },
     );
   }
-}
 
-export const deprecated = (axios) => (campus, mask) => {
-  const filters = {};
-  if (campus) {
-    filters.campus = campus;
+  getDriverRides(user, options = {}) {
+    return new FilterableQuery(async ({ filters = {} } = {}) => this.constructor.axios.get(
+      `${this.campusRoutePrefix}/drivers/${encodeURIComponent(user)}/rides`,
+      merge({
+        params: {
+          mask: this.mask,
+          filters,
+        },
+      }, options),
+    ));
   }
-  const params = {
-    mask,
-    filters,
-  };
-  return {
-    async getDriverRides(user, format = null, ...status) {
-      return axios.get(
-        `/${CAMPUS_PLURAL}/${campus}/drivers/${user}/rides`,
-        {
-          params: {
-            mask,
-            filters: merge({}, filters, { format }, { status }),
-          },
-        },
-      );
-    },
 
-    async mutateRide(ride, action, option) {
-      let { id } = ride;
-      let localParams = {};
-      if (option === 'step') {
-        localParams = {
-          step: ride,
-        };
-        id = ride.rideId;
-        return id.map((i) => axios.post(
-          `/${ENTITY_PLURAL}/${encodeURIComponent(i)}/${action}`,
-          {},
-          {
-            params: { ...params, ...localParams },
-          },
-        ));
-      }
-      return axios.post(
-        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}/${action}`,
-        {},
-        {
-          params: { ...params, ...localParams },
-        },
-      );
-    },
-
-    async getRides(
-      start,
-      end,
+  async stats(start, end, options = {}) {
+    return this.constructor.axios.get(
+      `${this.campusRoutePrefix || ''}/stats`,
       {
-        format = null, offset = 0, limit = 30, csv = {},
-      } = {},
-      { filter = {} } = {},
-    ) {
-      const headers = {
-        [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
-      };
-      const localParams = {
-        mask: csv.mask || mask,
-        filters: merge({}, filters, { start, end }, { ...filter }),
-      };
-      if (format) {
-        headers.Accept = format;
-        localParams.csv = csv;
-      }
-
-      const response = await axios.get(
-        `/${ENTITY_PLURAL}`,
-        {
-          params: localParams,
-          headers,
-        },
-      );
-
-      response.pagination = computePagination(response)[ENTITY];
-
-      return response;
-    },
-
-    async getRide(id, token) {
-      return axios.get(
-        `/${ENTITY_PLURAL}/${id}`,
-        {
-          params: {
-            mask,
-            token,
+        params: {
+          mask: this.mask,
+          filters: {
+            start,
+            end,
+            'time-scope': options.timeScope,
+            'time-unit': options.timeUnit,
           },
         },
-      );
-    },
+      },
+    );
+  }
 
-    async postRide(data) {
-      return axios.post(
-        `/${ENTITY_PLURAL}`,
-        merge(data, { campus: { id: campus } }),
-        {
-          params,
-        },
-      );
-    },
-
-    async patchRide(id, data, step = {}) {
-      return axios.patch(
-        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
-        data,
-        {
-          params: { ...params, step },
-        },
-      );
-    },
-
-    async getAvailableDrivers(userMask, start, end) {
-      const response = await axios.get(
-        `/${CAMPUS_PLURAL}/${campus}/drivers`,
-        {
-          params: {
-            mask: userMask,
-            filters: {
-              start,
-              end,
-            },
+  async availableDrivers(start, end, options = {}) {
+    const response = await this.constructor.axios.get(
+      `${this.campusRoutePrefix || ''}/drivers`,
+      merge({
+        params: {
+          mask: this.mask,
+          filters: {
+            start,
+            end,
           },
         },
-      );
-      response.data = response.data.map((u) => {
-        const user = u;
-        if (u.availabilities) {
-          user.availabilities = u.availabilities
-            .filter((r) => r.start && r.end)
-            .map((a) => Interval.fromDateTimes(DateTime.fromISO(a.start), DateTime.fromISO(a.end)));
-        }
-        return user;
-      });
-      return response;
-    },
+      }, options),
+    );
+    response.data = response.data.map(injectAvailabilities);
+    return response;
+  }
 
-    async getDriversPositions(userMask) {
-      return axios.get(
-        `/${CAMPUS_PLURAL}/${campus}/drivers-positions`,
-        {
-          params: {
-            mask: userMask,
+  async availableCars(start, end, options = {}) {
+    const response = await this.constructor.axios.get(
+      `${this.campusRoutePrefix || ''}/cars`,
+      merge({
+        params: {
+          mask: this.mask,
+          filters: {
+            start,
+            end,
           },
         },
-      );
-    },
-
-    async getAvailableCars(carMask, start, end, sort) {
-      const parameters = {
-        mask: carMask,
-        filters: {
-          start,
-          end,
-        },
-      };
-      if (sort) {
-        parameters.sort = sort;
-      }
-      const response = await axios.get(
-        `/${CAMPUS_PLURAL}/${campus}/cars`,
-        {
-          params: parameters,
-        },
-      );
-      response.data = response.data.map((c) => {
-        const car = c;
-        if (c.availabilities) {
-          car.availabilities = c.availabilities
-            .filter((r) => r.s && r.e)
-            .map((a) => Interval.fromDateTimes(DateTime.fromISO(a.s), DateTime.fromISO(a.e)));
-        }
-        return car;
-      });
-      return response;
-    },
-
-    async getStats(queriedStats, start, end, campuses) {
-      let endpoint = `/${CAMPUS_PLURAL}/${campus}/stats`;
-      if (!campus) {
-        endpoint = '/stats';
-      }
-
-      return axios.get(
-        endpoint,
-        {
-          params: {
-            mask: typeof queriedStats === 'string' ? queriedStats : queriedStats.mask,
-            filters: {
-              start,
-              end,
-              'time-scope': typeof queriedStats === 'string' ? undefined : queriedStats.timeScope,
-              'time-unit': typeof queriedStats === 'string' ? undefined : queriedStats.timeUnit,
-              campuses,
-            },
-          },
-        },
-      );
-    },
-
-    async getDriverPosition(id, token) {
-      try {
-        return await axios.get(
-          `/${ENTITY_PLURAL}/${id}/position`,
-          {
-            params: {
-              mask: 'driver,date,position',
-              token,
-            },
-          },
-        );
-      } catch (e) {
-        return {};
-      }
-    },
-
-    deleteRide(userId, id) {
-      return axios.delete(
-        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
-        {
-          params: {
-            ...params,
-            filters: { userId },
-          },
-        },
-      );
-    },
-  };
-};
+      }, options),
+    );
+    response.data = response.data.map(injectAvailabilities);
+    return response;
+  }
+}

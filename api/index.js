@@ -11,7 +11,7 @@ export default function (ctx, inject) {
   <% } %>
   const api = {
     <% Object.keys(options.api).forEach((key) => { %>
-      <%=key%>: <%=key%>.setAxios ? <%=key%>.setAxios(ctx.$axios) : <%=key%>(ctx.$axios),
+      <%=key%>: <%=key%>.setAxios(ctx.$axios),
     <% })%>
     query(key, ...params) {
     return new this[key](...params);
