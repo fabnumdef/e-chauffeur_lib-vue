@@ -3,7 +3,7 @@ import AbstractCRUDQuery from './abstract/crud-query';
 export const ENTITY = 'car-model';
 export const ENTITY_PLURAL = 'car-models';
 
-export default class CampusesQuery extends AbstractCRUDQuery {
+export default class CarModelsQuery extends AbstractCRUDQuery {
   static get ENTITY() {
     return ENTITY;
   }

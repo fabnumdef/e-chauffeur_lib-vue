@@ -3,7 +3,7 @@ import AbstractCampusCRUDQuery from './abstract/campus-crud-query';
 export const ENTITY = 'car';
 export const ENTITY_PLURAL = 'cars';
 
-export default class PoisQuery extends AbstractCampusCRUDQuery {
+export default class CarsQuery extends AbstractCampusCRUDQuery {
   static get ENTITY() {
     return ENTITY;
   }

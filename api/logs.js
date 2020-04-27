@@ -5,7 +5,7 @@ import AbstractQuery from './abstract/query';
 export const ENTITY = 'log';
 export const ENTITY_PLURAL = 'logs';
 
-export default class FeedbackQuery extends AbstractQuery {
+export default class LogsQuery extends AbstractQuery {
   static get baseEndpoint() {
     return `/${ENTITY_PLURAL}`;
   }
