@@ -27,10 +27,7 @@ export default class RidesQuery extends AbstractCRUDQuery {
   }
 
   get campusRoutePrefix() {
-    if (!this.campus) {
-      return null;
-    }
-    return `/campuses/${encodeURIComponent(this.campus)}`;
+    return this.campus ? `/campuses/${encodeURIComponent(this.campus)}` : null;
   }
 
   setCampus(campus) {

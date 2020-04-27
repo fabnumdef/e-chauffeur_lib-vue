@@ -2,10 +2,7 @@ import AbstractCRUDQuery from './crud-query';
 
 export default class AbstractCampusCRUDQuery extends AbstractCRUDQuery {
   get campusRoutePrefix() {
-    if (!this.campus) {
-      return null;
-    }
-    return `/campuses/${encodeURIComponent(this.campus)}`;
+    return this.campus ? `/campuses/${encodeURIComponent(this.campus)}` : null;
   }
 
   getEndpoint(...params) {
