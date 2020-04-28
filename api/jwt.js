@@ -8,7 +8,7 @@ export default class JWTQuery extends AbstractQuery {
     return '/jwt';
   }
 
-  async user(options) {
+  async user(options = {}) {
     return this.constructor.axios.get(
       this.getEndpoint('user'),
       merge({

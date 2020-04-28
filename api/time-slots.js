@@ -13,8 +13,8 @@ export default class TimeSlotsQuery extends AbstractCampusCRUDQuery {
 
   list(after, before, options = {}) {
     return super.list(options)
-      .setFilter('after', after)
-      .setFilter('before', before);
+      .setFilter('before', before)
+      .setFilter('after', after);
   }
 
   listDrivers(...args) {

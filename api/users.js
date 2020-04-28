@@ -18,7 +18,7 @@ export default class UsersQuery extends AbstractCampusCRUDQuery {
     return `/${ENTITY_PLURAL}`;
   }
 
-  create(data, options) {
+  create(data, options = {}) {
     return new User(async ({ sendToken = false } = {}) => super.create(data, merge({
       headers: {
         'X-Send-Token': sendToken,
@@ -26,7 +26,7 @@ export default class UsersQuery extends AbstractCampusCRUDQuery {
     }, options)));
   }
 
-  edit(id, data, options) {
+  edit(id, data, options = {}) {
     return new User(async ({ sendToken = false } = {}) => super.edit(id, data, merge({
       headers: {
         'X-Send-Token': sendToken,
@@ -34,7 +34,7 @@ export default class UsersQuery extends AbstractCampusCRUDQuery {
     }, options)));
   }
 
-  subscribeDevice(id, data, options) {
+  subscribeDevice(id, data, options = {}) {
     return this.constructor.axios.post(
       this.getEndpoint(id, 'subscribe-device'),
       data,

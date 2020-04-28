@@ -5,7 +5,7 @@ export default class FeedbackQuery extends AbstractQuery {
     return '/feedback';
   }
 
-  async send(data, options) {
+  async send(data, options = {}) {
     return this.constructor.axios.post(
       this.getEndpoint(),
       data,
