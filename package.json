@@ -1,6 +1,6 @@
 {
   "name": "@fabnumdef/e-chauffeur_lib-vue",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-rc.1",
   "main": "index.js",
   "scripts": {
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
