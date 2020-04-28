@@ -18,7 +18,8 @@ export default function ({
     if (expIn <= 0) {
       $auth.logout();
     } else if (expIn <= renewTrigger) {
-      $api.jwt.renewJWT()
+      $api.query('jwt')
+        .renew()
         .then((jwt) => {
           $auth.$storage.setUniversal(TOKEN_STORAGE, `${TOKEN_PREFIX}${jwt}`);
           $axios.setHeader($auth.strategies.local.options.tokenName, `${TOKEN_PREFIX}${jwt}`);
