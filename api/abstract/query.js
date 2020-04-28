@@ -13,8 +13,8 @@ export default class AbstractQuery {
   }
 
   setMask(mask) {
-      this.mask = Array.isArray(mask) ? mask.join(',') : mask;
-      return this;
+    this.mask = Array.isArray(mask) ? mask.join(',') : mask;
+    return this;
   }
 
   getMask() {
