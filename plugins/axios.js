@@ -8,6 +8,8 @@ export default function ({ $axios, app }) {
       // eslint-disable-next-line no-param-reassign
       config.baseURL = app.$env.API_URL;
     }
+    // eslint-disable-next-line no-param-reassign
+    config.headers['Accept-Language'] = 'fr';
     return config;
   });
 }

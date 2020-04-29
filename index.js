@@ -6,7 +6,7 @@ const pkg = require('./package.json');
 const MODULE_BUILD_DIR = 'lib-eChauffeur';
 
 module.exports = function injectModule({
-  api = {}, plugins = [], withAuth = false, authPlugins = [], mockAxios = false, accountRoute = 'account', prometheus = {},
+  api = {}, plugins = [], authPlugins = [], mockAxios = false, accountRoute = 'account', prometheus = {},
 } = {}) {
   const { buildDir, build } = this.options;
   const flavoredAuthPlugins = authPlugins.map(p => typeof p === 'string' ? {src: p} : p);
@@ -21,7 +21,7 @@ module.exports = function injectModule({
       ],
     },
     build: {
-      parallel: true,
+      extractCSS: true,
     },
     loading: { color: '#fff' },
     auth: {
@@ -42,6 +42,7 @@ module.exports = function injectModule({
           }))),
     },
     toast: {
+      iconPack: 'fontawesome',
       position: 'bottom-right',
       duration: 15000,
     },
@@ -52,9 +53,7 @@ module.exports = function injectModule({
 
   this.options.build.transpile = build.transpile.concat(['@fabnumdef/e-chauffeur_lib-vue']);
 
-  if (withAuth) {
-    this.requireModule('@nuxtjs/auth');
-  }
+  this.requireModule('@nuxtjs/auth');
 
   this.requireModule(['@qonfucius/nuxt-prometheus-module', prometheus]);
 
@@ -98,6 +97,7 @@ module.exports = function injectModule({
   });
 
   this.addServerMiddleware(join(__dirname, 'server-middlewares', 'x-frame.js'));
+  this.addServerMiddleware({ path: '/version', handler: join(__dirname, 'server-middlewares', 'version.js') },);
 
   this.requireModule(['qonfucius-nuxt-bulma', { css: false, postcss: false }]);
   this.requireModule('qonfucius-nuxt-fontawesome');
@@ -108,7 +108,6 @@ module.exports = function injectModule({
     keys: [
       'API_URL',
       'VAPID_PUBLIC_KEY',
-      'VERSION',
     ],
   }]);
 };

@@ -1,94 +1,23 @@
-import merge from 'lodash.merge';
-import { computePagination, RANGE } from './helpers';
+import AbstractCRUDQuery from './abstract/crud-query';
 
 export const ENTITY_PLURAL = 'shuttles';
 export const ENTITY = 'shuttle';
 
-export default (axios) => (campus, mask) => {
-  const filters = {};
-  if (campus) {
-    filters.campus = campus;
+export default class ShuttleQuery extends AbstractCRUDQuery {
+  static get ENTITY() {
+    return ENTITY;
   }
-  const params = {
-    mask,
-    filters,
-  };
 
-  return {
-    async getShuttles(
-      start,
-      end,
-      {
-        format = null, offset = 0, limit = 30, csv = {},
-      } = {},
-      { filter = {} } = {},
-    ) {
-      const headers = {
-        [RANGE]: `${ENTITY}=${offset}-${offset + limit - 1}`,
-      };
-      const localParams = {
-        mask: csv.mask || mask,
-        filters: merge({}, filters, { start, end }, { ...filter }),
-      };
-      if (format) {
-        headers.Accept = format;
-        localParams.csv = csv;
-      }
+  static get ENTITY_PLURAL() {
+    return ENTITY_PLURAL;
+  }
 
-      const response = await axios.get(
-        `/${ENTITY_PLURAL}`,
-        {
-          params: localParams,
-          headers,
-        },
-      );
+  setCampus(campus) {
+    this.campus = campus;
+    return this;
+  }
 
-      response.pagination = computePagination(response)[ENTITY];
-
-      return response;
-    },
-
-    async getShuttle(id, token) {
-      return axios.get(
-        `/${ENTITY_PLURAL}/${id}`,
-        {
-          params: {
-            mask,
-            token,
-          },
-        },
-      );
-    },
-
-    async postShuttle(data) {
-      return axios.post(
-        `/${ENTITY_PLURAL}`,
-        merge(data, { campus: { id: campus } }),
-        {
-          params,
-        },
-      );
-    },
-
-    async patchShuttle(id, data, step = {}) {
-      return axios.patch(
-        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
-        data,
-        {
-          params: { ...params, step },
-        },
-      );
-    },
-
-    deleteShuttle(id) {
-      return axios.delete(
-        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}`,
-        {
-          params: {
-            ...params,
-          },
-        },
-      );
-    },
-  };
-};
+  list(start, end, options = {}) {
+    return super.list(options).setFilter('start', start).setFilter('end', end);
+  }
+}
