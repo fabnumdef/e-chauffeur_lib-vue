@@ -111,21 +111,24 @@ export default class RidesQuery extends AbstractCRUDQuery {
     );
   }
 
-  async availableDrivers(start, end, options = {}) {
-    const response = await this.constructor.axios.get(
-      `${this.campusRoutePrefix || ''}/drivers`,
-      merge({
-        params: {
-          mask: this.mask,
-          filters: {
-            start,
-            end,
+  availableDrivers(start, end, options = {}) {
+    return new FilterableQuery(async ({ filters = {} } = {}) => {
+      const response = await this.constructor.axios.get(
+        `${this.campusRoutePrefix || ''}/drivers`,
+        merge({
+          params: {
+            mask: this.mask,
+            filters: {
+              start,
+              end,
+              ...filters,
+            },
           },
-        },
-      }, options),
-    );
-    response.data = response.data.map(injectAvailabilities);
-    return response;
+        }, options),
+      );
+      response.data = response.data.map(injectAvailabilities);
+      return response;
+    });
   }
 
   async availableCars(start, end, options = {}) {
