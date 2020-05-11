@@ -1,8 +1,8 @@
 import merge from 'lodash.merge';
 import { Interval, DateTime } from 'luxon';
 import Ride from './model-query/ride';
-import AbstractCRUDQuery from './abstract/crud-query';
 import FilterableQuery from './abstract/filterable-query';
+import AbstractCampusCRUDQuery from './abstract/campus-crud-query';
 
 export const ENTITY_PLURAL = 'rides';
 export const ENTITY = 'ride';
@@ -17,22 +17,13 @@ function injectAvailabilities(d) {
   return data;
 }
 
-export default class RidesQuery extends AbstractCRUDQuery {
+export default class RidesQuery extends AbstractCampusCRUDQuery {
   static get ENTITY() {
     return ENTITY;
   }
 
   static get ENTITY_PLURAL() {
     return ENTITY_PLURAL;
-  }
-
-  get campusRoutePrefix() {
-    return this.campus ? `/campuses/${encodeURIComponent(this.campus)}` : null;
-  }
-
-  setCampus(campus) {
-    this.campus = campus;
-    return this;
   }
 
   list(start, end, options = {}) {
