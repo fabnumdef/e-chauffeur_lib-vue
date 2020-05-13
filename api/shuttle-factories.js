@@ -1,9 +1,9 @@
-import AbstractCRUDQuery from './abstract/campus-crud-query';
+import AbstractCampusCRUDQuery from './abstract/campus-crud-query';
 
 export const ENTITY = 'shuttle-factory';
 export const ENTITY_PLURAL = 'shuttle-factories';
 
-export default class ShuttleFactoriesQuery extends AbstractCRUDQuery {
+export default class ShuttleFactoriesQuery extends AbstractCampusCRUDQuery {
   static get ENTITY() {
     return ENTITY;
   }
